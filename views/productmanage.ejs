@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/promanage.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">    
+
+</head>
+<body>
+    <br>
+    <br>
+
+    <h1 style="color:white">Products</h1>
+    <br>
+    <br><center>
+    <input type="text" name="searchItem" id="searchBox" placeholder="    Search by product name" >
+    <input type="button" class="proBtn"  value="SEARCH">
+
+    <input type="text" name="product"  id="inputBox" placeholder="    category" >
+    <input type="button"  class="proBtn" id="addBtnt" onclick="addProduct()" value="ADD PRODUCT">
+    <div class="dropdown bg-danger" id="dropDownSearch" >
+        
+    </div>
+    <div class="dropdown bg-success" id="dropDown" >
+        
+    </div>
+    <br>
+    <br>
+    <br>
+    <table class="table table-striped table-dark" border="1" style="width:85%">
+        <tr>
+            
+            <th>Product name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Discount</th>
+            <th>Active</th>
+            <th>Action</th>
+             <th>Remove User</th>
+        </tr>
+        <% findProduct.forEach((product)=>{%>
+        <tr>
+            <td><img src="/uploads/<%= product.coverimage.filename %>"  width="30px" height="30px">
+                <%= product.name %></td>
+            <td><%= product.category%></td>
+            <td><%= product.price%></td>
+            <td><%= product.stock%></td>
+            <td>
+                <% if (product.stock < 0) { %>
+                  Out of Stock
+                <% } else if (product.stock < 10) { %>
+                  Running Low
+                <% } else { %>
+                  In Stock
+                <% } %>
+              </td>
+                          <td><%= product.discount%></td>
+            <td><%= (product.active===true)? 'Published' : 'Unpublished'%></td>
+            <td ><button class="<%= (product.active === true) ? 'bg-danger' : 'bg-success' %> p-2 w-50 text-light" style="border-radius: 20px;" id="productstatus<%= product._id %>" onclick="productstatus('<%=product._id%>')" id="statusButton<%=product._id%>" ><%= (product.active === true) ? 'Unpublish' : 'Publish' %></button></td>
+<td><button onclick ="removeProduct('<%= product._id%>')"><span id="boot-icon" class="bi bi-trash" style="font-size: 25px; color: rgb(255, 0, 0); -webkit-text-stroke-width: 0px;"></span></button>
+</td>
+        </tr>
+        <% }) %>
+
+    </table>
+
+</center>
+<div class="overlay" id="overlay" style="display: none;">
+<form class="addproduct_form" id="productForm" action="/admin/addproduct" method="POST" enctype="multipart/form-data">
+<button class="close-button" id="closeButton">X</button>
+<br>
+<h2>Add Details</h2>
+<input class="box" type="text" name="category" id="catInput" style="display:none">
+<label>Product name:</label>
+<input class="box"type="text" name="name">
+<br><br>
+<label for="myTextarea">Product Description:</label>
+<br>
+<textarea name="description" id="myTextarea" rows="4" cols="50"></textarea>
+ <br>
+
+<label>Add cover image:</label>
+<br>
+<input class="box"type="file" name="coverImage">
+
+<label>Add product images:</label>
+<br>
+<input class="box" type="file" name="images" required multiple>
+<br>
+<label>Price:</label>
+<br>
+<input class="box" type="text" name="price">
+<br>
+<br>
+<label>Stock:</label>
+<br>
+<input class="box" type="text" name="stock">
+<br>
+<label>Discount:</label>
+<br>
+<div class="slidecontainer">
+    <input type="range" min="1" max="100" value="0" class="slider" id="myRange" name="discount">
+  </div>
+  
+<br>
+<select class="selectpicker" name="active">
+    <option>Published</option>
+    <option>Unpublished</option>
+  </select>
+  <br>
+<br>
+      <button type="submit" id="submitButton">Add Product</button>
+</form>
+</div>
+<script src="/javascripts/product.js"></script>
+</body>
+</html>

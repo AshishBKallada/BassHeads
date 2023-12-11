@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/zoomExplain.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+        <div class="col-sm-5 mt-1 " style="border: 1px solid black;">
+            <ul id="glasscase" class="gc-start">
+                <li><img src="/images/cat.jpg" alt="Text" />
+                </li>
+                
+            </ul>
+        </div>
+
+         
+        
+  
+<style>
+    .glass-case * {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    background-color: aliceblue;
+    overflow-x: hidden;
+}
+
+
+
+.detials {
+    margin-left: 10%;
+}
+
+.heading {
+    margin-top: 10%;
+    width: auto;
+}
+
+.headText {
+    font-size: 2.5rem;
+}
+
+.Description {
+    margin-top: 2%;
+}
+
+.imageInclude {
+    width: auto;
+    height: auto;
+    margin-top: 6%;
+    margin-left: 4%;
+    border-right: 0.2rem solid black;
+    border-top: 0.2rem solid black;
+    border-left: 0.1rem solid black;
+    border-bottom: 0.2rem solid black;
+}
+
+.category {
+    width: 100%;
+    background-color: black;
+    height: 30px;
+}
+
+.headText {
+    font-weight: bold;
+}
+
+
+.glass-case *:before,
+.glass-case *:after {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+}
+
+.glass-case {
+    position: relative;
+}
+
+/********************DISPLAY**************************/
+.gc-display-area {
+    position: absolute;
+    overflow: hidden;
+    border: 2px solid #F5F5F5;
+    padding: 2px;
+    background-color: #fff;
+}
+
+.gc-display-container {
+    position: relative;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.gc-display-display {
+    position: relative;
+    height: 600px;
+    width: 600px;
+    max-height: 100%;
+    max-width: 100%;
+    cursor: crosshair;
+    opacity: 1;
+}
+
+/********************LENS**************************/
+.gc-lens {
+    position: absolute;
+    overflow: hidden;
+    z-index: 1000;
+    cursor: crosshair;
+    background: #CECECE;
+    opacity: .5 !important;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 5-7 */
+    filter: alpha(opacity=50) !important;
+    /* Netscape */
+    -moz-opacity: 0.5;
+    /* Safari 1.x */
+    -khtml-opacity: 0.5;
+}
+
+/********************ZOOM**************************/
+.gc-zoom {
+    position: absolute;
+    overflow: hidden;
+    width: 300%;
+    height: auto;
+    z-index: 1040 !important;
+    border: 2px solid #f5f5f5;
+    padding: 2px;
+    background-color: #fff;
+}
+
+.gc-zoom-inner {
+    cursor: crosshair;
+    z-index: 1010 !important;
+}
+
+.gc-zoom-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.gc-zoom-container img {
+    position: relative;
+}
+
+/********************UL**************************/
+.gc-thumbs-area {
+    position: absolute;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.gc-thumbs-area-prev,
+.gc-thumbs-area-next {
+    position: absolute;
+    z-index: 1010;
+}
+
+.gc-thumbs-area.gc-hz .gc-thumbs-area-prev,
+.gc-thumbs-area.gc-hz .gc-thumbs-area-next {
+    top: 0;
+    height: 100%;
+    min-height: 100%;
+    width: 5%;
+}
+
+.gc-thumbs-area.gc-vt .gc-thumbs-area-prev,
+.gc-thumbs-area.gc-vt .gc-thumbs-area-next {
+    left: 0;
+    width: 100%;
+    min-width: 100%;
+    height: 5%;
+}
+
+.gc-thumbs-area.gc-hz .gc-thumbs-area-prev {
+    left: 0;
+}
+
+.gc-thumbs-area.gc-hz .gc-thumbs-area-next {
+    right: 0;
+}
+
+.gc-thumbs-area.gc-vt .gc-thumbs-area-prev {
+    top: 0;
+}
+
+.gc-thumbs-area.gc-vt .gc-thumbs-area-next {
+    bottom: 0;
+}
+
+.gc-thumbs-area-prev:hover,
+.gc-thumbs-area-next:hover {
+    opacity: 1;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.gc-thumbs-area-prev .gc-disabled,
+.gc-thumbs-area-next .gc-disabled,
+.gc-thumbs-area-prev .gc-disabled:hover,
+.gc-thumbs-area-next .gc-disabled:hover {
+    opacity: .3;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    /* IE 5-7 */
+    filter: alpha(opacity=30);
+    /* Netscape */
+    -moz-opacity: 0.3;
+    /* Safari 1.x */
+    -khtml-opacity: 0.3;
+    cursor: default;
+}
+
+.glass-case ul {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    height: 10%;
+}
+
+/* imp */
+.gc-thumbs-area.gc-hz li {
+    display: inline;
+    float: left;
+
+    margin-right: 5px;
+}
+
+/* imp */
+
+.glass-case ul li .gc-li-display-container {
+    margin-top: 0%;
+    margin-left: 100%;
+}
+
+.glass-case ul li:hover {
+    border-color: #4f4f4f;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.glass-case ul li.gc-active,
+.glass-case ul li.gc-active:hover {
+    border-color: #669966;
+    cursor: default;
+}
+
+.glass-case ul li .gc-li-display-container img {
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+/********************OVERLAY**************************/
+.gc-overlay-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2147483647 !important;
+    background-color: rgb(204, 204, 204);
+    /the falback for ie7, ie8/
+    background-color: rgba(51, 51, 51, 0.95);
+}
+
+.gc-overlay-gcontainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.gc-overlay-container {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.gc-overlay-container-display {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.gc-ocd-top {
+    top: 0;
+}
+
+.gc-ocd-bottom {
+    bottom: 0;
+}
+
+.gc-overlay-fit {
+    padding: 4em 5.5em 1em 5.5em;
+    overflow: hidden;
+}
+
+.gc-overlay-display {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    cursor: crosshair;
+}
+
+.gc-overlay-display-center {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.gc-overlay-display-vcenter {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.gc-overlay-display-hcenter {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.gc-overlay-top-icons {
+    position: absolute;
+    top: 0;
+    padding: 1em 1.5em 1em 0;
+    width: 100%;
+    height: 4em;
+}
+
+.gc-overlay-left-icons {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 0 1em 0 1.5em;
+    height: 100%;
+    width: 5.5em;
+}
+
+.gc-overlay-right-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1.5em 0 1em;
+    height: 100%;
+    width: 5.5em;
+}
+
+/********************ICONS**************************/
+@font-face {
+    font-family: "linea-arrows-10";
+    src: url("../fonts/linea-arrows-10.eot");
+    src: url("../fonts/linea-arrows-10.eot?#iefix") format("embedded-opentype"), url("../fonts/linea-arrows-10.woff") format("woff"), url("../fonts/linea-arrows-10.ttf") format("truetype"), url("../fonts/linea-arrows-10.svg#linea-arrows-10") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.gc-icon:before {
+    line-height: 1;
+}
+
+.gc-icon {
+    font-family: "linea-arrows-10" !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    z-index: 1020;
+    cursor: pointer;
+    cursor: hand;
+    color: #fff;
+    opacity: .7;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    /* IE 5-7 */
+    filter: alpha(opacity=70);
+    /* Netscape */
+    -moz-opacity: 0.7;
+    /* Safari 1.x */
+    -khtml-opacity: 0.7;
+    height: 1em;
+    width: 1em;
+    line-height: 0;
+    background: rgb(204, 204, 204);
+    background: rgba(204, 204, 204, 0.5);
+    border: 2px solid #F5F5F5;
+}
+
+.gc-icon:hover {
+    opacity: 1;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    /* IE 5-7 */
+    filter: alpha(opacity=100);
+    /* Netscape */
+    -moz-opacity: 1;
+    /* Safari 1.x */
+    -khtml-opacity: 1;
+}
+
+/* *** ICON NEXT *** */
+.gc-icon-next {
+    top: 50%;
+    right: -2px;
+}
+
+.gc-icon-next:before {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    content: "\e04b";
+}
+
+.gc-icon-next-vt {
+    bottom: 0;
+    left: 50%;
+}
+
+.gc-icon-next-vt:before {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    content: "\e019";
+}
+
+.gc-display-area .gc-icon-next {
+    font-size: 2em !important;
+}
+
+.gc-thumbs-area-next .gc-icon-next {
+    right: 0;
+    font-size: 2em !important;
+}
+
+.gc-thumbs-area-next .gc-icon-next-vt {
+    font-size: 1.5em !important;
+}
+
+.gc-overlay-area .gc-icon-next {
+    position: relative;
+    right: 0;
+    font-size: 3em;
+}
+
+/* *** ICON PREV *** */
+.gc-icon-prev {
+    top: 50%;
+    left: -2px;
+}
+
+.gc-icon-prev:before {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    content: "\e03f";
+}
+
+.gc-icon-prev-vt {
+    top: 0;
+    left: 50%;
+}
+
+.gc-icon-prev-vt:before {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    content: "\e083";
+}
+
+.gc-display-area .gc-icon-prev {
+    font-size: 2em !important;
+}
+
+.gc-thumbs-area-prev .gc-icon-prev {
+    font-size: 2em !important;
+}
+
+.gc-thumbs-area-prev .gc-icon-prev-vt {
+    font-size: 1.5em !important;
+}
+
+.gc-overlay-area .gc-icon-prev {
+    position: relative;
+    left: 0;
+    font-size: 3em;
+}
+
+/* *** ICON DOWNLOAD *** */
+.gc-icon-download {
+    right: -2px;
+    bottom: 0;
+    font-size: 2em;
+    overflow: hidden;
+}
+
+.gc-icon-download:before {
+    position: absolute;
+    top: -4px;
+    left: -2px;
+    content: "\e064";
+}
+
+/* *** ICON CLOSE *** */
+.gc-icon-close {
+    position: relative;
+    font-size: 2em;
+    float: right;
+}
+
+.gc-icon-close:before {
+    position: absolute;
+    content: "\e04a";
+    top: -2px;
+    right: -2px;
+}
+
+.gc-icon-enlarge {
+    position: relative;
+    float: right;
+    margin-right: 0.25em;
+    font-size: 2em;
+}
+
+.gc-icon-enlarge:before {
+    position: absolute;
+    content: '\e017';
+    top: -2px;
+    right: -2px;
+}
+
+.gc-icon-compress {
+    position: relative;
+    float: right;
+    margin-right: 0.25em;
+    font-size: 2em;
+}
+
+.gc-icon-compress:before {
+    position: absolute;
+    content: '\e053';
+    top: -2px;
+    right: -2px;
+}
+</style>
+
+    <script src="/javascripts/test.js"></script>
+    
+</body>
+
+
+
+  
+
+</html>

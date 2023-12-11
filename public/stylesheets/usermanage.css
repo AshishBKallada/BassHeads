@@ -1,0 +1,33 @@
+body{
+    background-image: url('/images/usermanage6.webp');
+background-size: cover;
+
+}
+
+.gradient-text{
+    
+    font-weight: bolder;
+    font-style: italic;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background: linear-gradient(45deg, #FF5733, #FFFFFF); /* Adjust the colors */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+    display: inline;
+    margin-left: 250px;
+}
+
+
+table{
+    margin-top:50px;
+    width :70%;
+    height:150px;
+    }
+    .a{
+        width:100px;
+        height:30px;
+        border-radius: 6px;
+        color:white;
+        background-color:orangered;
+    
+    }

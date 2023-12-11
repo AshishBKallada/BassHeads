@@ -1,0 +1,418 @@
+<%- include('adminPartials/adminHeader') %>
+  <script src="/javascripts/editproduct.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
+  <script src="https://unpkg.com/cropperjs/dist/cropper.js"></script>
+
+
+  <main class="main-wrap">
+    <header class="main-header navbar">
+      <div class="col-search">
+        <form class="searchform">
+          <div class="input-group">
+            <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+            <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+          </div>
+          <datalist id="search_terms">
+            <option value="Products">
+            <option value="New orders">
+            <option value="Apple iphone">
+            <option value="Ahmed Hassan">
+          </datalist>
+        </form>
+      </div>
+      <div class="col-nav">
+        <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+            class="material-icons md-apps"></i> </button>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link btn-icon" href="#">
+              <i class="material-icons md-notifications animation-shake"></i>
+              <span class="badge rounded-pill">3</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+          </li>
+          <li class="dropdown nav-item">
+            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i
+                class="material-icons md-public"></i></a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+              <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                  alt="English">English</a>
+              <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+              <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+              <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+            </div>
+          </li>
+          <li class="dropdown nav-item">
+            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false">
+              <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User"></a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+              <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+              <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+              <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+              <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+              <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <section class="content-main">
+      <div class="content-header">
+        <div class="container-fluid">
+
+          <div class="container">
+            <!-- Title -->
+            <div class="d-flex justify-content-between align-items-lg-center py-3 flex-column flex-lg-row">
+              <h2 class="h5 mb-3 mb-lg-0"><a href="../../pages/admin/customers.html" class="text-muted"><i
+                    class="bi bi-arrow-left-square me-2"></i></a> Edit Product</h2>
+
+            </div>
+
+            <!-- Main content -->
+            <div class="row">
+              <!-- Left side -->
+              <form action="/admin/updateproduct" method="post" enctype="multipart/form-data">
+                <div class="hstack gap-3">
+                  <button class="btn btn-primary btn-sm btn-icon-text" type="submit" style="margin-left:500px"><i
+                      class="bi bi-save"></i> <span class="text">Save</span></button>
+                </div>
+                <div class="col-lg-8">
+                  <!-- Basic information -->
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <h3 class="h6 mb-4">Basic information</h3>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" value="<%= productData.name%>" name="name">
+                            <input style="display:none" type="text" name="id" value="<%= productData._id %>">
+
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" class="form-control" name="price" value="<%= productData.price%>">
+                            <span id="priceError" style="color: red;" class="error"></span>
+
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"
+                              value="<%= productData.description %>"><%= productData.description %></textarea>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="text" class="form-control" value="<%= productData.stock%>" name="stock">
+                            <span id="stockError" style="color: red;" class="error"></span>
+
+                          </div>
+                          <br>
+                          <div class="mb-3">
+                            <label class="form-label">Discount</label>
+                            <input type="range" min="0" max="100" value="<%= productData.discount %><" class="slider" id="myRange" name="discount">
+                            <p id="discountValue"><%= productData.discount %></p>
+                          </div>
+                          <div class="mb-3" style="float:right;">
+                            <select class="selectpicker bg-light" name="active">
+                              <option>Published</option>
+                              <option>Unpublished</option>
+                            </select>
+                          </div>
+                        </div>
+
+
+
+
+
+                        <br>
+
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Address -->
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <h3 class="h6 mb-4">Product Images</h3>
+                      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                        rel="stylesheet" />
+                      <div id="main-content" class="file_manager">
+                        <div class="container">
+                          <div class="row clearfix">
+                            <% productData.images.forEach((image,index)=>{ %>
+                              <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="card" style="border-color:beige;">
+                                  <div class="file">
+
+                                    <div class="hover" style="float: right;">
+                                      <button onclick="removeProduct('<%= productData._id%>','<%= index %>')"
+                                        type="button" class="btn btn-icon btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                      </button>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="image">
+                                      <img src="/uploads/<%= image.filename%>" alt="img" class="img-fluid">
+                                    </div>
+
+
+                                  </div>
+                                </div>
+                              </div>
+
+                              <% })%>
+
+
+                          </div>
+
+                          <div class="card-body">
+                            <br>
+                            <div id="images-container">
+
+                            </div>
+                            <div class="card-body">
+                              <% for(let i=0; i < 3; i++) { %>
+
+                                <input type="file" id="images-input<%= i %>" name="images" accept="image/*"
+                                  onchange="previewImages()"  >
+                               
+                                  <button type="button" class="btn btn-md rounded font-sm hover-up"
+                                  onclick="loadImage('images-input<%= i %>')">Crop</button>
+
+                                <img src="" id="showimages-input<%= i %>"
+                                  style="width: auto; height: 250px; margin-top: 20px ; display: none;" alt="">
+                               
+                                  <button style="display: none;" class="btn btn-warning p-2 px-5 border-2 mt-2"
+                                  type="button" id="saveimages-input<%= i %>"
+                                  onclick="uploadCroppedImage('images-input<%= i %>')">Save</button>
+                               
+                                  <button style="display: none;" class="btn btn-danger p-2 px-5 border-2 mt-2"
+                                  type="button" id="cancelimages-input<%= i %>">Cancel</button>
+                                <% } %>
+
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Right side -->
+                <div class="col-lg-4">
+                  <!-- Status -->
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <h3 class="h6">Category</h3>
+                      <select class="form-select" name="category" id="category">
+                        <option disabled>Choose one</option>
+                        <% categoryData.forEach((category) => { %>
+                          <option value="<%= category._id %>" <% if (category._id.toString() === productData.category.toString()) { %>selected<% } %>>
+                            <%= category.category %>
+                          </option>
+                        <% }) %>
+                      </select>
+                      
+                    </div>
+                  </div>
+                  <!-- Avatar -->
+                  <div class="card mb-4">
+
+                    <div class="card-body">
+                      <h3 class="h6">Cover Image</h3>
+                      <br>
+                      <div id="image-container">
+                        <img id="image-preview" src="/uploads/<%= productData.coverimage.filename %>"
+                          alt="Image Preview">
+                      </div>
+                      <div class="card-body">
+                        <input type="file" id="image-input" name="coverImage" accept="image/*"
+                          onchange="previewImage()">
+                        <button type="button" class="btn btn-md rounded font-sm hover-up"
+                          onclick="loadImage('image-input')">Crop</button>
+                        <img src="" id="showimage-input"
+                          style="width: auto; height: 250px; margin-top: 20px; display: none;" alt="">
+                        <button style="display: none;" class="btn btn-warning p-2 px-5 border-2 mt-2" type="button"
+                          id="saveimage-input" onclick="uploadCroppedImage('image-input')">Save</button>
+                        <button style="display: none;" class="btn btn-danger p-2 px-5 border-2 mt-2" type="button"
+                          id="cancelimage-input">Cancel</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+    </section> <!-- content-main end// -->
+    <footer class="main-footer font-xs">
+      <div class="row pb-30 pt-15">
+        <div class="col-sm-6">
+          <script>
+            document.write(new Date().getFullYear())
+          </script> ©, Evara - HTML Ecommerce Template .
+        </div>
+        <div class="col-sm-6">
+          <div class="text-sm-end">
+            All rights reserved
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const slider = document.getElementById("myRange");
+    const discountValue = document.getElementById("discountValue");
+
+    discountValue.innerHTML = slider.value + "%";
+
+    slider.addEventListener("input", function () {
+      discountValue.innerHTML = this.value + "%";
+    });
+
+
+    function previewImage() {
+      const input = document.getElementById('image-input');
+
+      const preview = document.getElementById('image-preview');
+
+      const file = input.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = 'default-image.jpg';
+      }
+    }
+  </script>
+  <script>
+    let cropper;
+
+    function loadImage(id) {
+        alert('crop called')
+        alert(id)
+      const input = document.getElementById(id);
+      const canvas = document.getElementById(`show${id}`);
+      const previewImage = document.getElementById('image-preview'); 
+
+      const file = input.files[0];
+
+      if (file && file.type.startsWith('image/')) {
+        alert('1')
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          alert('2')
+          canvas.src = e.target.result;
+          document.getElementById(`save${id}`).style.display = 'block';
+          document.getElementById(`cancel${id}`).style.display = 'block';
+
+          if (cropper) {
+            cropper.destroy();
+          }
+
+          cropper = new Cropper(canvas, {
+            viewMode: 2,
+          });
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        canvas.src = '';
+        if (cropper) {
+          cropper.destroy();
+        }
+      }
+    }
+
+    function uploadCroppedImage(id) {
+      if (!cropper) {
+        console.error('Cropper not initialized.');
+        return;
+      }
+
+      const canvas = cropper.getCroppedCanvas();
+
+      if (canvas) {
+        canvas.toBlob((blob) => {
+          const fileName = 'cropped_image.jpg';
+          const file = new File([blob], fileName, { type: 'image/jpeg' });
+          const input = document.getElementById(id);
+          const previewImage = document.getElementById('image-preview');
+
+          if (DataTransfer && FileList) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            input.files = dataTransfer.files;
+          } else {
+            console.error('FileList and DataTransfer are not supported in this browser.');
+          }
+
+          previewImage.src = URL.createObjectURL(blob);
+
+          cropper.destroy();
+          document.getElementById(`save${id}`).style.display = 'none';
+          document.getElementById(`cancel${id}`).style.display = 'none';
+        });
+      }
+    }
+
+  function validateFormAndSubmit() {
+    document.getElementById('priceError').innerHTML = '';
+    document.getElementById('stockError').innerHTML = '';
+
+    var price = document.getElementById('price').value;
+    if (isNaN(price) || parseFloat(price) < 0) {
+      document.getElementById('priceError').innerHTML = 'Please enter a valid positive price.';
+      return;
+    }
+
+    var stock = document.getElementById('stock').value;
+    if (isNaN(stock) || parseInt(stock) < 0) {
+      document.getElementById('stockError').innerHTML = 'Please enter a valid positive stock quantity.';
+      return;
+    }
+
+    var discount = document.getElementById('myRange').value;
+    if (isNaN(discount) || parseInt(discount) < 0 || parseInt(discount) > 100) {
+      document.getElementById('discountError').innerHTML = 'Please enter a valid discount percentage between 0 and 100.';
+      return;
+    }
+
+    document.getElementById('yourFormId').submit(); 
+  }
+
+  </script>
+
+  <%- include('adminPartials/adminFooter') %>

@@ -1,0 +1,35 @@
+/* Add this to your existing CSS or in a new style tag in the head */
+
+.search-box-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-icon,
+.close-search-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.search-icon {
+    left: 10px;
+}
+
+.close-search-icon {
+    right: 10px;
+}
+
+.search-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; /* Initially hidden */
+    z-index: 1000; /* Adjust as needed */
+    border-radius: 5px; /* Optional: Add some rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+}

@@ -1,0 +1,218 @@
+<%- include('adminPartials/adminHeader') %>
+
+
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="/adminassets/imgs/theme/flag-us.png" alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/adminassets/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Categories </h2>
+                    <p>Add, edit or delete a category</p>
+                </div>
+                <div>
+                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form action="/admin/addcat" method="POST">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Name</label>
+                                    <input name="category" type="text" placeholder="Type here" class="form-control" id="product_name" required/>
+                                </div>
+                                <!-- <div class="mb-4">
+                                    <label for="product_slug" class="form-label">Slug</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_slug" />
+                                </div> -->
+                                <!-- <div class="mb-4">
+                                    <label class="form-label">Parent</label>
+                                    <select class="form-select">
+                                        <option>Clothes</option>
+                                        <option>T-Shirts</option>
+                                    </select>
+                                </div> -->
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="desc" placeholder="Type here" class="form-control" required></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Create category</button>
+                                </div>
+                                <% if(error) { %>
+                                    <p style="color: red;"><%= error %></p>
+                                    <% } %>
+                            </form>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Discount</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% findCat.forEach((category) => { %>
+                                        <tr>
+                                            <td>21</td>
+                                            <td>
+                                                <input type="hidden" id="edit-id" value="<%= category._id %>">
+                                                <span class="view-mode"><%= category.category %></span>
+                                                <input type="text" id="edit-name" class="edit-mode" value="<%= category.category %>" style="display: none;" required>
+                                            </td>
+                                            <td>
+                                                <span class="view-mode"><%= category.desc %></span>
+                                                <input type="text" id="edit-description" class="edit-mode" value="<%= category.desc %>" style="display: none;" required>
+                                            </td>
+                                            <td>
+                                                <%= category.discount %> %
+                                            </td>
+                                            <td>
+                                                <span style="<%= (category.active === false) ? 'color: red;' : 'color:green' %>" class="view-mode"><%= (category.active === true) ? 'Published' : 'Unpublished' %></span>
+                                                <select id="edit-status" class="edit-mode" style="display: none;">
+                                                    <option value="true" <%= (category.active === true) ? 'selected' : '' %>>Published</option>
+                                                    <option value="false" <%= (category.active === false) ? 'selected' : '' %>>Unpublished</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="dropdown">
+                                                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm">
+                                                        <i class="material-icons md-more_horiz"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item edit-info-button" data-category-id="<%= category._id %>">Edit info</a>
+                                                        <a id="statusBtn<%= category._id %>" onclick="statusChange('<%= category._id %>')" class="dropdown-item text-danger" href="#">
+                                                            <%= (category.active === true) ? 'Unpublish' : 'Publish' %>
+                                                        </a>
+                                                    </div>
+                                                </div> <!-- dropdown //end -->
+                                                <button class="save-button" style="display: none;">Save</button>
+                                                <button class="cancel-button" style="display: none;">Cancel</button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                                     <!-- Edit Form (initially hidden) -->
+                       
+                            
+                            </div>
+                        </div> <!-- .col// -->
+                        <div class="col-md-3">
+                                <div class="mb-4" style="margin-top: -250px;">
+                                    <label class="form-label">Category</label>
+                                    <select id="categorySelect" class="form-select">
+                                        <% findCat.forEach((category)=>{ %>
+                                        <option value="<%= category._id %>"><%= category.category %></option>
+                                        <% }) %>
+                                    </select>
+                                 
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Discount</label>
+                                    <div class="slidecontainer">
+                                        <input type="range" min="0" max="100" value="0" class="slider" id="myRange" name="discount">
+                                        <p id="discountValue">0%</p>
+                                    </div>
+                                </div>
+                               
+                             
+                               
+                                <div class="d-grid">
+                                    <button type="submit" onclick="updateDiscount()" class="btn btn-primary">Update Discount</button>
+                                </div>
+                               
+                        </div>
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script> ©, Evara - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        const slider = document.getElementById("myRange");
+        const discountValue = document.getElementById("discountValue");
+        
+        discountValue.innerHTML = slider.value + "%";
+        
+        slider.addEventListener("input", function () {
+            discountValue.innerHTML = this.value + "%";
+        });
+        </script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="/javascripts/category.js"></script>
+
+    <%- include('adminPartials/adminFooter') %>

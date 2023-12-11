@@ -1,0 +1,510 @@
+﻿<%- include('userPartials/userheader') %>
+<head><style>.card {
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
+}
+.l-bg-cherry {
+    background: linear-gradient(to right, #493240, #f09) !important;
+    color: #fff;
+}
+
+.l-bg-blue-dark {
+    background: linear-gradient(to right, #373b44, #4286f4) !important;
+    color: #fff;
+}
+
+.l-bg-green-dark {
+    background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+    color: #fff;
+}
+
+.l-bg-orange-dark {
+    background: linear-gradient(to right, #a86008, #ffba56) !important;
+    color: #fff;
+}
+
+.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
+    font-size: 110px;
+}
+
+.card .card-statistic-3 .card-icon {
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: 20px;
+    opacity: 0.1;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.l-bg-green {
+    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+    color: #fff;
+}
+
+.l-bg-orange {
+    background: linear-gradient(to right, #f9900e, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}</style></head>
+    <link rel="stylesheet" href="/stylesheets/css/profile.css">
+    <main class="main"
+        style="background-image: url('/images/112.webp');background-size: cover;background-repeat:no-repeat;">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html" rel="nofollow">Home</a>
+                    <span></span> Pages
+                    <span></span> Account
+                </div>
+            </div>
+        </div>
+        <section class="pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dashboard-menu">
+                                    <ul class="nav flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active text-light" id="dashboard-tab"
+                                                data-bs-toggle="tab" href="#dashboard" role="tab"
+                                                aria-controls="dashboard" aria-selected="false"><i
+                                                    class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" id="orders-tab" data-bs-toggle="tab"
+                                                href="#orders" role="tab" aria-controls="orders"
+                                                aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" id="track-orders-tab" data-bs-toggle="tab"
+                                                href="#track-orders" role="tab" aria-controls="track-orders"
+                                                aria-selected="false"><i
+                                                    class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" id="address-tab" data-bs-toggle="tab"
+                                                href="#address" role="tab" aria-controls="address"
+                                                aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" id="account-detail-tab" data-bs-toggle="tab"
+                                                href="#account-detail" role="tab" aria-controls="account-detail"
+                                                aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" id="wallet-tab" data-bs-toggle="tab"
+                                                href="#wallet-detail" role="tab" aria-controls="wallet-detail"
+                                                aria-selected="true">
+                                                <i class="fi-rs-user mr-10"></i>Wallet
+                                            </a>
+                                        </li>
+                                        <li class="nav-item text-light">
+                                            <a class="nav-link" href="/logout"><i
+                                                    class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <style>
+                                .btn-dark:hover {
+                                    background-color: #343a40; /* Change to your desired hover background color */
+                                    color: #ffffff; /* Change to your desired hover text color */
+                                }
+                            </style>
+                            <div class="col-md-8">
+                                <div class="tab-content dashboard-content">
+                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel"
+                                        aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Hello <%= user.username %>! </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>From your account dashboard. you can easily check &amp; view your <a
+                                                        href="#">recent orders</a>, manage your <a href="#">shipping and
+                                                        billing addresses</a> and <a href="#">edit your password and
+                                                        account details.</a></p>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>hey ! share our page to your friends and earn rewards</p>
+                                                <button class="btn btn-dark rounded" onclick="shareLink()">Share
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab"
+                                        style="width: 800px;">
+                                        <div class="card bg-light">
+                                            <div class="card-header bg-dark text-white">
+                                                <h5 class="mb-0">Your Orders</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Order</th>
+                                                                <th>Date</th>
+                                                                <th>Status</th>
+                                                                <th>Total</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% order.forEach((order)=> { %>
+                                                                <tr>
+                                                                    <td>#1357</td>
+                                                                    <td>
+                                                                        <%= order.createdAt %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= order.status %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= order.grandTotal %> for <%=
+                                                                                order.products.length %> item<%=
+                                                                                    order.products.length===1 ? '' : 's'
+                                                                                    %>
+                                                                    </td>
+                                                                   
+                                                                    <td><a href="/order/orderview/?orderId=<%= order._id %>"
+                                                                            class="btn btn-dark w-100 text-center mt-4">
+                                                                            Details</a></td>
+                                                                </tr>
+                                                                <% }); %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="track-orders" role="tabpanel"
+                                        aria-labelledby="track-orders-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Orders tracking</h5>
+                                            </div>
+                                            <div class="card-body contact-from-area">
+                                                <p>To track your order please enter your OrderID in the box below and
+                                                    press "Track" button. This was given to you on your receipt and in
+                                                    the confirmation email you should have received.</p>
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <form class="contact-form-style mt-30 mb-50" action="#"
+                                                            method="post">
+                                                            <div class="input-style mb-20">
+                                                                <label>Order ID</label>
+                                                                <input name="order-id"
+                                                                    placeholder="Found in your order confirmation email"
+                                                                    type="text" class="square">
+                                                            </div>
+                                                            <div class="input-style mb-20">
+                                                                <label>Billing email</label>
+                                                                <input name="billing-email"
+                                                                    placeholder="Email you used during checkout"
+                                                                    type="email" class="square">
+                                                            </div>
+                                                            <button class="submit submit-auto-width"
+                                                                type="submit">Track</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="address" role="tabpanel"
+                                        aria-labelledby="address-tab">
+                                        <div class="row">
+                                            <label class="form-label">
+                                                <a href="/address" class="btn btn-dark w-100 w-md-auto"
+                                                    role="button">Add Address</a>
+                                            </label>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-3">Shipping Addresses</h5>
+
+                                                        <% addressData.forEach((address, index)=> { %>
+                                                            <div class="card mb-3 border-dark">
+                                                                <div class="card-header bg-dark text-white">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-start">
+                                                                        <div>
+                                                                            <h6 class="mb-0">Contact Name: <%=
+                                                                                    address.contacts[0].contactname %>
+                                                                            </h6>
+                                                                            <p class="mb-0"><strong>Email:</strong>
+                                                                                <%= address.contacts[0].email %>
+                                                                            </p>
+                                                                            <p class="mb-0"><strong>Phone No:</strong>
+                                                                                <%= address.contacts[0].phno %>
+                                                                            </p>
+                                                                            <p class="mb-0"><strong>Address
+                                                                                    Type:</strong>
+                                                                                <%= address.addresses[0].addressType %>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <a href="/editaddress?addressId=<%= address._id %>" style="color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                                                                              </svg></a> &nbsp;&nbsp;
+                                                                            <button class="btn btn-danger btn-sm"
+                                                                                onclick="removeAddress('<%= address._id %>')">Remove</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <p class="mb-0"><strong>House No:</strong>
+                                                                        <%= address.addresses[0].houseno %>
+                                                                    </p>
+                                                                    <p class="mb-0"><strong>Street:</strong>
+                                                                        <%= address.addresses[0].street %>
+                                                                    </p>
+                                                                    <p class="mb-0"><strong>Landmark:</strong>
+                                                                        <%= address.addresses[0].landmark %>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane fade" id="account-detail" role="tabpanel"
+                                        aria-labelledby="account-detail-tab">
+                                        <link
+                                            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                                            rel="stylesheet" />
+
+                                        <div class="container p-0">
+                                            <div class="row">
+
+
+                                                <div class="col-md-7 col-xl-12">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade show active" id="account"
+                                                            role="tabpanel">
+
+                                                            <div class="card">
+                                                                <div class="card-header">
+
+                                                                    <h5 class="card-title mb-0">Account Details</h5>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    for="inputUsername">Username</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="username" name="name"
+                                                                                    placeholder="Username"
+                                                                                    value="<%= user.username%>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="inputUsername">Email</l
+                                                                                        abel>
+                                                                                    <input required="" id="email"
+                                                                                        class="form-control"
+                                                                                        name="email" type="email"
+                                                                                        value="<%= user.email%>">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <a href="#" class="text-dark"
+                                                                                onclick="changePass()">Change
+                                                                                password?</a>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <button  class="btn btn-dark w-100 mt-3"
+                                                                                onclick="forgotPass()">Forgot
+                                                                                password</button>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <button type="submit"
+                                                                                class="btn btn-dark w-100 mt-3"
+                                                                                onclick="updateProfile()">Save</button>
+                                                                        </div>
+                                                                        <!-- <div class="col-md-4">
+                                        <div class="text-center">
+                                            <img alt="Andrew Jones" src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                                            <div class="mt-2">
+                                                <span class="btn btn-primary"><i class="fa fa-upload"></i></span>
+                                            </div>
+                                            <small>For best results, use an image at least 128px by 128px in .jpg format</small>
+                                        </div>
+                                    </div> -->
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="password" role="tabpanel">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Password</h5>
+
+                                                                    <form>
+                                                                        <div class="form-group">
+                                                                            <label for="inputPasswordCurrent">Current
+                                                                                password</label>
+                                                                            <input type="password" class="form-control"
+                                                                                id="inputPasswordCurrent">
+                                                                            <small><a href="#">Forgot your
+                                                                                    password?</a></small>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="inputPasswordNew">New
+                                                                                password</label>
+                                                                            <input type="password" class="form-control"
+                                                                                id="inputPasswordNew">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="inputPasswordNew2">Verify
+                                                                                password</label>
+                                                                            <input type="password" class="form-control"
+                                                                                id="inputPasswordNew2">
+                                                                        </div>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Save
+                                                                            changes</button>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="wallet-detail" role="tabpanel" aria-labelledby="wallet-tab">
+
+                                        <div class="col">
+                                            <div class="card radius-15 bg-white">
+                                               
+                                                <div class="card-body text-center" >
+                                                    <div class="card-header bg-light">
+                                                        <h5 class="mb-0" >Your Wallet Balance : ₹ <%= walletBalance %> <button style="margin-left:50px" class="btn btn-dark radius-15 " onclick="addWallet()" >Add Wallet</button></h5> 
+                                                       
+                                                    </div>
+                                                    <div class="container" style="max-height: 400px; overflow-y: auto;">
+                                                        <div class="row ">
+                                                            <h3 style="margin-left: -200px;">Transactions:</h3>
+                                                            <% transactions.forEach((transaction)=>{ %>
+                                                                <% if(transaction.type==='credit'){%>
+                                                            <div class="col-xl-12 col-lg-6">
+                                                                <div class="card l-bg-cherry">
+                                                                    <div class="card-statistic-3 p-4">
+                                                                        <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+                                                                        <div class="mb-4">
+                                                                            <h5 class="card-title mb-0"><%= transaction.reason %></h5>
+                                                                        </div>
+                                                                        <div class="row align-items-center mb-2 d-flex">
+                                                                            <div class="col-8">
+                                                                                <h2 class="d-flex align-items-center mb-0">
+                                                                                    ₹<%= transaction.amount %>
+                                                                                </h2>
+                                                                            </div>
+                                                                            <div class="col-4 text-right">
+                                                                                <span>Debit <i class="fa fa-arrow-up"></i></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                                                            <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                          <% }else{ %>
+                                                            <div class="col-xl-12 col-lg-6">
+                                                                <div class="card l-bg-green-dark">
+                                                                    <div class="card-statistic-3 p-4">
+                                                                        <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
+                                                                        <div class="mb-4">
+                                                                            <h5 class="card-title mb-0"><%= transaction.reason %></h5>
+                                                                        </div>
+                                                                        <div class="row align-items-center mb-2 d-flex">
+                                                                            <div class="col-8">
+                                                                                <h2 class="d-flex align-items-center mb-0">
+                                                                                    ₹<%= transaction.amount %>
+                                                                                </h2>
+                                                                            </div>
+                                                                            <div class="col-4 text-right">
+                                                                                <span>Credit <i class="fa fa-arrow-down"></i></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                                                            <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+                                                        <% }) %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script src="/javascripts/useraccount.js"></script>
+    <%- include('userPartials/userfooter') %>

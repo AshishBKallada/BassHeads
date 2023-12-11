@@ -1,0 +1,102 @@
+<%- include('adminPartials/adminHeader') %>
+
+<link rel="stylesheet" href="/stylesheets/css/returndetails.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- <script src="/javascripts/returndetails.js"></script> -->
+
+<section class="vh-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+          <div class="card card-stepper" style="border-radius: 16px;">
+            <div class="card-header p-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <p class="text-muted mb-2"> Order ID <span class="fw-bold text-body"><%= item[0].orderId._id %></span></p>
+                  <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">12,March 2019</span> </p>
+                </div>
+               
+              </div>
+            </div>
+            <% if(item[0].status==="Accepted" && item[0].returnOptions==="Exchange"){ %>
+            <div class="card mb-4">
+                <div class="card-body">
+                  <h3 class="h6">Update Status</h3>
+                  <select id="statusSelect" class="select" style="width: 400px; background-color: #ADD8E6; color: white;" onchange="updateStatus(this.value, '<%= item[0]._id %>')">
+                    <option value="Pending">Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Out For Delivery">Out For Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+                </div>
+              </div>
+              <% } else if(item[0].status==="Accepted" && item[0].returnOptions==="Refund") { %>  
+                <div class="card mb-4">
+                    <div class="card-body">
+                      <h3 class="h6">Update Status</h3>
+                      <select id="statusSelect" class="select" style="width: 400px; background-color: #ADD8E6; color: white;" onchange="updateStatus(this.value, '<%= item[0]._id %>')">
+                        <option value="Pending">Pending</option>
+                        <option value="Out for pickup">Out for pickup</option>
+                        <option value="Picked">Picked</option>
+                      </select>
+                    </div>
+                  </div>
+                  <% } %>
+              <script>
+                function updateStatus(selectedStatus, returnId,orderId) {
+                  console.log('Selected Status:', selectedStatus);
+                
+                  $.ajax({
+                    url: '/admin/return/delivery',
+                    method: 'POST',
+                    data: { status: selectedStatus, returnId: returnId, }, 
+                    success: function (response) {
+                      
+                      
+                      Swal.fire({
+                          position: "center",
+                          icon: "success",
+                          title: "Delivery status Updated",
+                          showConfirmButton: false,
+                          timer: 1500,
+                          onClose: () => {
+                              Swal.close(); 
+                              location.reload();
+                          }
+                      });
+                  
+                    },
+                    error: function (error) {
+                      console.error('Error updating status:', error);
+                    }
+                  });
+                }
+                </script>
+              
+          
+              
+            <div class="card-body p-4" style="margin-top: -50px;">
+              <div class="d-flex flex-row mb-4 pb-2">
+                <div class="flex-fill">
+                  <h5 class="bold"><%= item[0].productId.name %></h5>
+                  <p class="text-muted"> Qt: ----------PENDING------------</p>
+                  <h4 class="mb-3"><%= item[0].productId.name %> <span class="small text-muted"> via <%= item[0].orderId.paymentMethod %> </span></h4>
+                  <h5 class="bold">Reason:</h5><p><%= item[0].reason %></p>
+                </div>
+                <div>
+                  <img style="width: 150px;height:200px;" class="align-self-center img-fluid"
+                    src="/uploads/<%= item[0].productId.coverimage.filename %>" width="250">
+                </div>
+              </div>
+          
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+ 
+  <%- include('adminPartials/adminFooter') %>

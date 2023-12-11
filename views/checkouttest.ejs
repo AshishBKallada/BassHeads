@@ -1,0 +1,531 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="/stylesheets/css/checkouttest.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <ol class="activity-checkout mb-0 px-4 mt-3">
+                        <!-- <li class="checkout-item">
+                            <div class="avatar checkout-icon p-1">
+                                <div class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bxs-receipt text-white font-size-20"></i>
+                                </div>
+                            </div>
+                            <div class="feed-item-list">
+                                <div>
+                                    <h5 class="font-size-16 mb-1">Billing Info</h5>
+                                    <p class="text-muted text-truncate mb-4">Sed ut perspiciatis unde omnis iste</p>
+                                    <div class="mb-3">
+                                        <form>
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-name">Name</label>
+                                                            <input type="text" class="form-control" id="billing-name" placeholder="Enter name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-email-address">Email Address</label>
+                                                            <input type="email" class="form-control" id="billing-email-address" placeholder="Enter email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-phone">Phone</label>
+                                                            <input type="text" class="form-control" id="billing-phone" placeholder="Enter Phone no.">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="billing-address">Address</label>
+                                                    <textarea class="form-control" id="billing-address" rows="3" placeholder="Enter full address"></textarea>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label">Country</label>
+                                                            <select class="form-control form-select" title="Country">
+                                                                <option value="0">Select Country</option>
+                                                                <option value="AF">Afghanistan</option>
+                                                                <option value="AL">Albania</option>
+                                                                <option value="DZ">Algeria</option>
+                                                                <option value="AS">American Samoa</option>
+                                                                <option value="AD">Andorra</option>
+                                                                <option value="AO">Angola</option>
+                                                                <option value="AI">Anguilla</option>                                   
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label" for="billing-city">City</label>
+                                                            <input type="text" class="form-control" id="billing-city" placeholder="Enter City">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-0">
+                                                            <label class="form-label" for="zip-code">Zip / Postal code</label>
+                                                            <input type="text" class="form-control" id="zip-code" placeholder="Enter Postal code">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li> -->
+                        <li class="checkout-item">
+                            <div class="avatar checkout-icon p-1">
+                                <div class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bxs-truck text-white font-size-20"></i>
+                                </div>
+                            </div>
+                            <div class="feed-item-list">
+                                <div>
+                                    <h5 class="font-size-16 mb-1">Shipping Info</h5>
+                                    <p class="text-muted text-truncate mb-4">Choose an address:</p>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <% addressData.forEach((address, index) => { %>
+
+                                            <div class="col-lg-4 col-sm-6">
+                                                <div data-bs-toggle="collapse">
+                                                    <label class="card-radio-label mb-0">
+                                                        <input type="radio" name="address" class="card-radio-input" checked="" id="checkoutShippingMethod<%= index %>" value="<%= address._id%>" onclick="selectAddress('<%= address._id %>')" <%= index === 0 ? 'checked' : '' %>>
+                                                        <div class="card-radio text-truncate p-3">
+                                                            <span class="fs-14 mb-4 d-block"><%- address.contacts[0].contactname %></span>
+                                                            <span class="fs-14 mb-2 d-block"><%- address.contacts[0].email %></span>
+                                                            <span class="text-muted fw-normal text-wrap mb-1 d-block"><%- address.contacts[0].phno %></span>
+                                                           
+                                                            <span class="text-muted fw-normal d-block"><%= address.addresses[0].addressType %></span>
+                                                            <span class="text-muted fw-normal d-block"><%- address.addresses[0].street %></span>
+                                                            <span class="text-muted fw-normal d-block">                                                            <%- address.addresses[0].landmark %>
+                                                            </span>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAddressModal">
+                                                                <i class="bx bx-pencil font-size-16"></i>
+                                                             </button>
+                                                             <div class="modal fade" id="updateAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                  <div class="modal-content">
+                                                                   
+                                                                    <div class="modal-header">
+                                                                      <h5 class="modal-title" id="addAddressModalLabel">Update Address</h5>
+                                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                      </button>
+                                                                    </div>
+                                                                
+                                                            
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                        </div>
+                                                    </label>
+                                                        
+                                                     
+                                                     
+                                                </div>
+                                            </div>
+
+                                            <% }) %>
+
+                                            
+                                        </div>
+                                    </div> 
+                                    
+<!-- Add this wherever you want the modal trigger button -->
+<% if (addressData.length < 3) { %>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAddressModal">
+        Add Address
+    </button>
+<% } %>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+       
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="addAddressForm" action="/addaddress" method="POST">
+
+        <div class="modal-body">
+          <!-- Your form goes here -->
+            <div class="row">
+                <!-- Name -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" name="idCard" value="idCard" style="display: none;">
+                        <label for="firstNameBilling" class="form-label">Name</label>
+                        <input type="text" name="contactname" class="form-control" id="firstNameBilling" placeholder="" value="" required="">
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Phone No.</label>
+                        <input type="number" name="phno" class="form-control" id="email" placeholder="you@example.com">
+                    </div>
+                </div>
+            </div>
+           
+
+            <h3 class="fs-5 mt-5 fw-bolder mb-4 border-bottom pb-4">Shipping Address</h3>
+
+            <div class="row">
+                <!-- Name -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="firstName" placeholder="" value="" required="">
+                    </div>
+                </div>
+
+                <!-- Address Type -->
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="form-label">Address Type</label>
+                        <div class="form-check">
+                            <input type="radio" name="addressType" class="form-check-input" id="homeAddress" value="home">
+                            <label class="form-check-label" for="homeAddress">Home Address</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="addressType" class="form-check-input" id="workAddress" value="work">
+                            <label class="form-check-label" for="workAddress">Work Address</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="addressType" class="form-check-input" id="tempAddress" value="temp">
+                            <label class="form-check-label" for="tempAddress">Temporary Address</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Country -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="country" class="form-label">Country</label>
+                        <select class="form-select" name="country" id="country" required="">
+                            <option value="">Please Select...</option>
+                            <option>United States</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- State -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">State</label>
+                        <select class="form-select" name="state" id="state" required="">
+                            <option value="">Please Select...</option>
+                            <option>California</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Post Code -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="zip" class="form-label">Zip/Post Code</label>
+                        <input type="text" name="pin" class="form-control" id="zip" placeholder="" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">Street</label>
+                        <input type="text" name="street" class="form-control" id="address" placeholder="123 Some Street Somewhere" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">Landmark</label>
+                        <input type="text" name="landmark" class="form-control" id="address" placeholder="123 Some Street Somewhere" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">District</label>
+                        <input type="text" name="district" class="form-control" id="address" placeholder="123 Some Street Somewhere" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">City</label>
+                        <input type="text" name="city" class="form-control" id="address" placeholder="123 Some Street Somewhere" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="state" class="form-label">House No.</label>
+                        <input type="text" name="houseno" class="form-control" id="address" placeholder="123 Some Street Somewhere" required="">
+                    </div>
+                </div>
+            </div>
+            
+    
+    </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" form="addAddressForm" class="btn btn-dark">Add Address</button>
+        </div>
+    </form>
+
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+
+  
+                                </div>
+                            </div>
+                        </li> 
+                        <li class="checkout-item">
+                            
+                            <div class="avatar checkout-icon p-1">
+                                <div class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bxs-wallet-alt text-white font-size-20"></i>
+                                </div>
+                            </div>
+                            <div class="feed-item-list">
+                                <div>
+                                    <h5 class="font-size-16 mb-1">Payment Info</h5>
+                                    <p class="text-muted text-truncate mb-4">Choose a payment option:</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-size-14 mb-3">Payment method : <button style="margin-left:300px;" type="button" class="btn btn-primary" onclick="addWallet()">Add to Wallet</button>
+
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div data-bs-toggle="collapse">
+                                                <label class="card-radio-label">
+                                                    <input type="radio" name="pay-method" class="card-radio-input"  id="checkoutPaymentWallet" value="wallet" onclick="selectPaymentMethod('wallet')">
+                                                    <span class="card-radio py-3 text-center text-truncate">
+                                                        <i class="bx bx-credit-card d-block h2 mb-3"></i>
+                                                        Wallet
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div>
+                                                <label class="card-radio-label">
+                                                    <input type="radio" name="pay-method" class="card-radio-input" id="checkoutPaymentStripe" value="credit-card" onclick="selectPaymentMethod('Razorpay')">
+                                                    <span class="card-radio py-3 text-center text-truncate">
+                                                        <i class="bx bxl-paypal d-block h2 mb-3"></i>
+                                                        Razorpay
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div>
+                                                <label class="card-radio-label">
+                                                    <input type="radio" name="pay-method" class="card-radio-input" checked="" id="checkoutPaymentCOD" value="cod" onclick="selectPaymentMethod('cod')">
+
+                                                    <span class="card-radio py-3 text-center text-truncate">
+                                                        <i class="bx bx-money d-block h2 mb-3"></i>
+                                                        <span>Cash on Delivery</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                <div class="container mt-3"> 
+                    <% couponData.forEach((coupon)=>{ %>
+                    <div class="d-flex justify-content-center row" > 
+                      <div class="col-md-8" > <div class="coupon p-1 btn-outline-dark card-radio" >
+                         <div class="row no-gutters">
+                           <div class="col-md-4 border-right"> 
+                            <div class="d-flex flex-column align-items-center">
+                              <img src="https://i.imgur.com/XwBlVpS.png">
+                              <span class="d-block"><%= coupon.name %></span>
+                              <!-- <span class="text-black-50">Shoes</span> -->
+                            </div> </div> <div class="col-md-8" > 
+                              <div> 
+                                <div class="d-flex flex-row justify-content-end off"> 
+                                  <h1><%= coupon.discount %>%</h1><span>OFF</span>
+                                </div> 
+                                <div class="d-flex flex-row justify-content-between off px-3 p-2">
+                                  <span>Promo code:</span>
+                                  <span class="border border-success px-3 rounded code"><%= coupon.name %></span>
+                                </div>
+                               </div> 
+                              </div> 
+                            </div>
+                           </div> 
+                          </div>
+                         </div>
+                         <br>
+                         <% }) %>
+                         </div>
+                         <div class="py-4">
+                            <div class="input-group mb-3">
+                              <input style=" width: 400px;margin-left: 150px;" type="text"  placeholder="Enter your coupon code" id="coupon">
+                              <button class="btn btn-dark btn-sm px-4" onclick="applyCoupon('<%= cartData.selectedTotal %>')">Apply</button>
+                            </div>
+                          </div>
+                          
+            </div>
+
+            <div class="row my-4">
+                <div class="col">
+                    <a href="ecommerce-products.html" class="btn btn-link text-muted">
+                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                </div> <!-- end col -->
+                <div class="col">
+                    <div class="text-end mt-2 mt-sm-0">
+                        <a href="#" class="btn btn-success" onclick="confirmorder()">
+                            <i class="mdi mdi-cart-outline me-1"></i> Confirm Order </a>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row-->
+           
+                     
+        </div>
+        
+        <div class="col-xl-4">
+        
+            <div class="card checkout-order-summary">
+                <div class="card-body">
+                    <div class="p-3 bg-light mb-3">
+                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end ms-2">#MN0124</span></h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-centered mb-0 table-nowrap">
+                            <!-- <thead>
+                                <tr>
+                                    <th class="border-top-0" style="width: 110px;" scope="col">Product</th>
+                                    <th class="border-top-0" scope="col">Product Desc</th>
+                                    <th class="border-top-0" scope="col">Price</th>
+                                </tr>
+                            </thead> -->
+                            <tbody>
+                                <!-- <tr>
+                                    <th scope="row"><img src="https://www.bootdey.com/image/280x280/FF00FF/000000" alt="product-img" title="product-img" class="avatar-lg rounded"></th>
+                                    <td>
+                                        <h5 class="font-size-16 text-truncate"><a href="#" class="text-dark">Waterproof Mobile Phone</a></h5>
+                                        <p class="text-muted mb-0">
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star-half text-warning"></i>
+                                        </p>
+                                        <p class="text-muted mb-0 mt-1">$ 260 x 2</p>
+                                    </td>
+                                    <td>$ 520</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><img src="https://www.bootdey.com/image/280x280/FF00FF/000000" alt="product-img" title="product-img" class="avatar-lg rounded"></th>
+                                    <td>
+                                        <h5 class="font-size-16 text-truncate"><a href="#" class="text-dark">Smartphone Dual Camera</a></h5>
+                                        <p class="text-muted mb-0">
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                            <i class="bx bxs-star text-warning"></i>
+                                        </p>
+                                        <p class="text-muted mb-0 mt-1">$ 260 x 1</p>
+                                    </td>
+                                    <td>$ 260</td>
+                                </tr> -->
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Sub Total :</h5>
+                                    </td>
+                                    <td id="selectedTotal">
+                                        ₹<%= cartData.selectedTotal %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Discount :</h5>
+                                    </td>
+                                    <td>
+                                        - $ 78
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Shipping Charge :</h5>
+                                    </td>
+                                    <td>
+                                        $ 25
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Estimated Tax :</h5>
+                                    </td>
+                                    <td>
+                                        $ 18.20
+                                    </td>
+                                </tr>                              
+                                    
+                                <tr class="bg-light">
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Total:</h5>
+                                    </td>
+                                    <td id="Total">
+                                        ₹<%= cartData.selectedTotal + 450 %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+    
+</div>    
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Theme JS -->
+<!-- Vendor JS -->
+<script src="./assets/js/vendor.bundle.js"></script>
+
+<!-- Theme JS -->
+<script src="./assets/js/theme.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/javascripts/payment.js"></script>

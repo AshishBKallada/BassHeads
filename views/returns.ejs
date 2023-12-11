@@ -1,0 +1,66 @@
+<%- include('adminPartials/adminHeader') %>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/stylesheets/css/returns.css">
+<script src="/javascripts/return.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="idance" style="margin-left:300px;">
+    <div class="schedule content-block">
+        <div class="container">
+            <h2 data-aos="zoom-in-up" class="aos-init aos-animate">Schedule</h2>
+        
+            <div class="timetable">
+        
+              <!-- Schedule Top Navigation -->
+              <nav class="nav nav-tabs">
+                <a class="nav-link active">Mon</a>
+                <a class="nav-link">Tue</a>
+                <a class="nav-link">Wed</a>
+                <a class="nav-link">Thu</a>
+                <a class="nav-link">Fri</a>
+                <a class="nav-link">Sat</a>
+                <a class="nav-link">Sun</a>
+              </nav>
+        
+              <div class="tab-content">
+                <div class="tab-pane show active">
+                    <div class="row">
+                        <% returns.forEach((returnItem) => { %>
+                          <!-- Schedule Item -->
+                          <div class="col-md-6">
+                            <div class="timetable-item">
+                              <div class="timetable-item-img">
+                                <img src="/uploads/<%= returnItem.productId.coverimage.filename %>" alt="Product Image">
+                              </div>
+                              <div class="timetable-item-main">
+                                <div class="timetable-item-time"><%= returnItem.user.username %></div>
+                                <div class="timetable-item-name"><%= returnItem.productId.name %></div>
+                                <% if (returnItem.status === 'Accepted') { %>
+                                  <p style="color:greenyellow">ACCEPTED</p>
+                                <% } else if (returnItem.status === 'Rejected') { %>
+                                  <p style="color:red">REJECTED</p>
+                                <% } else { %>
+                                  <a href="#" class="btn btn-success" onclick="returnStatus('<%= returnItem._id %>','Accepted')">Accept</a>
+                                  <a href="#" class="btn btn-danger" onclick="returnStatus('<%= returnItem._id %>','Rejected')">Reject</a>
+                                <% } %>
+                                <a href="/admin/returns/details/<%= returnItem._id %>" class="btn btn-info">Details</a>
+                                <!-- <div class="timetable-item-like">
+                                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                  <i class="fa fa-heart" aria-hidden="true"></i>
+                                  <div class="timetable-item-like-count">11</div>
+                                </div> -->
+                              </div>
+                            </div>
+                          </div>
+                        <% }) %>
+                      </div>
+                      
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</section><%- include('adminPartials/adminFooter') %>

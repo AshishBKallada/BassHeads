@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+
+<head>
+  <!-- Page Meta Tags-->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/css/pagination.css">
+  <!-- Custom Google Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+    rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="/assets/css/libs.bundle.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/assets/css/theme.bundle.css" />
+
+  <!-- Fix for custom scrollbar if JS is disabled-->
+  <noscript>
+    <style>
+      /**
+          * Reinstate scrolling for non-JS clients
+          */
+      .simplebar-content-wrapper {
+        overflow: auto;
+      }
+    </style>
+  </noscript>
+
+  <!-- Page Title -->
+  <title>BassHeads</title>
+
+</head>
+
+<body class="">
+
+  <!-- Navbar -->
+  <!-- Navbar -->
+
+  <!-- / Navbar--> <!-- / Navbar-->
+
+  <!-- Main Section-->
+  <section class="mt-0 ">
+    <!-- Page Content Goes Here -->
+
+    <!-- Category Top Banner -->
+    <div class="py-10 bg-img-cover bg-overlay-dark position-relative overflow-hidden bg-pos-center-center rounded-0"
+      style="background-image: url(/assets/images/banners/banner-category-top.jpg);">
+      <div class="container-fluid position-relative z-index-20" data-aos="fade-right" data-aos-delay="300">
+        <h1 class="fw-bold display-6 mb-4 text-white">Latest Arrivals</h1>
+        <div class="col-12 col-md-6">
+          <p class="text-white mb-0 fs-5">
+            When it's time to head out and get your sound on, have a look at our latest arrivals. Whether you're into
+            Gaming, streaming, studio or New Balance, we really have something for everyone!
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Category Top Banner -->
+
+    <div class="container-fluid" data-aos="fade-in">
+      <!-- Category Toolbar-->
+      <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
+        <div>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+
+              <li class="breadcrumb-item active" aria-current="page"><%= categoryName %></li>
+            </ol>
+          </nav>
+          <h1 class="fw-bold fs-3 mb-2">New Releases (<%= count%>)</h1>
+          Showing <%=  productsRange.start %> - <%= productsRange.end %> of <%= count %>
+        </div>
+        <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
+
+          <!-- Filter Trigger-->
+          <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto "
+            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters"
+            aria-controls="offcanvasFilters">
+            <i class="ri-equalizer-line me-2"></i> Filters
+          </button>
+          <!-- / Filter Trigger-->
+
+          <!-- Sort Options-->
+          <select class="form-select form-select-sm border-0 bg-light p-3 pe-5 lh-1 fs-7" id="sortByDropdown">
+            <option selected disabled>Sort By</option>
+            <option value="1" data-sort="HighToLow">High to Low</option>
+            <option value="2" data-sort="lowToHigh">Low to High</option>
+          </select>
+          <!-- / Sort Options-->
+        </div>
+      </div> <!-- /Category Toolbar-->
+
+      <!-- Products-->
+      <div class="row g-4">
+        <% catProducts.forEach((product) => { %>
+          <div id="productDiv" class="col-12 col-sm-6 col-lg-2">
+            <!-- Card Product-->
+            <div class="card border border-transparent position-relative overflow-hidden h-100 transparent" style="margin-right: 20px;">
+              <div class="card-img position-relative">
+                <div class="card-badges">
+                  <% if (product.stock === 0) { %>
+                    <span class="badge badge-card out-of-stock" style='color: red;' ><span class="f-w-2 f-h-2 bg-danger rounded-circle d-block me-1"></span>
+                      Out of Stock</span>
+                  <% } else if (product.stock < 10) { %>
+                    <span class="badge badge-card running-low" style='color: orange;'><span class="f-w-2 f-h-2 bg-warning rounded-circle d-block me-1"></span>
+                      Running Low</span>
+                  <% } %>
+                </div>
+        
+                <span onclick="addToWishlist('<%= product._id %>')" class="position-absolute top-0 end-0 p-2 z-index-20 text-muted">
+                  <i class="ri-heart-line"></i>
+                </span>
+        
+                <picture class="position-relative overflow-hidden d-block bg-light">
+                  <img style="height: 200px;" class="w-100 img-fluid position-relative z-index-10" title=""
+                    src="/uploads/<%= product.coverimage.filename %>" alt="">
+                </picture>
+                <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                  <button type="button" onclick="addToCart('<%= product._id %>'); event.preventDefault();" class="btn btn-quick-add">
+                    <i class="ri-add-line me-2"></i> Quick Add
+                  </button>
+                  
+                                  
+                </div>
+              </div>
+              <div class="card-body px-0">
+                <a class="text-decoration-none link-cover" href="/productdetails/<%= product._id %>">
+                  <% 
+                    const maxChars = 40; 
+                    const truncatedName = product.name.length > maxChars ? product.name.substring(0, maxChars) + "..." : product.name;
+                  %>
+                  <%= truncatedName %>
+                </a>
+                <p class="mt-2 mb-0 small">
+                  <s class="text-muted"><%= product.baseprice %></s>
+                  <span class="text-dark-bold"><b>₹<%= product.price %></b></span>
+                </p>
+              </div>
+            </div>
+            <!--/ Card Product-->
+          </div>
+        <% }); %>
+        
+      </div>
+      <!-- / Products-->
+
+     
+<!--PAGINATION----------------------------->  
+<center>
+  <div style="color: white; margin-left: 450px" class="pagination:container">
+    <!-- Previous button as a link -->
+    <% if(currentPage>1){ %>
+    <a href="/displayproducts?page=<%= currentPage-1 %>&categoryId=<%=categoryId %>" class="pagination:number arrow" style="text-decoration: none;color:white">
+        <svg width="18" height="18">
+            <use xlink:href="#left" />
+        </svg>
+        <span class="arrow:text">Previous</span> 
+    </a>
+<% } %>
+    <!-- Page numbers -->
+    <% for(i=1;i<=pages;i++){ %>
+      <% if (i === currentPage) { %>
+        <a href="/displayproducts?page=<%= i %>&categoryId=<%=categoryId %>" class="pagination:number pagination:active" style="text-decoration: none;color:red"><%= i %></a>
+      <% } else { %>
+        <a href="/displayproducts?page=<%= i %>&categoryId=<%=categoryId %>" class="pagination:number" style="text-decoration: none;color:white;"><%= i %></a>
+      <% } %>   <% } %>
+
+    <!-- Next button as a link -->
+    <% if(currentPage<pages){ %>
+    <a href="/displayproducts?page=<%= currentPage+1 %>&categoryId=<%=categoryId %>" class="pagination:number arrow" style="text-decoration: none;color:white">
+        <svg width="18" height="18">
+            <use xlink:href="#right" />
+        </svg>
+    </a>
+    <% } %>
+</div>
+
+<!-- Hidden SVG symbols for left and right arrows -->
+<svg class="hide">
+    <symbol id="left" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+    </symbol>
+    <symbol id="right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </symbol>
+</svg>
+</center>
+<!--PAGINATION----------------------------->   
+      
+      
+
+     </div> <!-- / Pagination-->
+   
+
+    <!-- /Page Content -->
+  </section>
+  <!-- / Main Section-->
+
+  <!-- Footer -->
+  <!-- / Footer-->
+
+  <!-- Offcanvas Imports-->
+  <!-- Filters Offcanvas-->
+  <form action="/displayproducts" method="GET">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+      <div class="offcanvas-header pb-0 d-flex align-items-center">
+        <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Category Filters</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="d-flex flex-column justify-content-between w-100 h-100">
+
+          <!-- Filters-->
+          <div>
+
+            Price Filter
+            <div class="py-4 widget-filter widget-filter-price border-top">
+              <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="true"
+                aria-controls="filter-modal-price">
+                Price
+              </a>
+              <div id="filter-modal-price" class="collapse show">
+                <div class="filter-price mt-6"></div>
+                <div class="d-flex justify-content-between align-items-center mt-7">
+                  <div class="input-group mb-0 me-2 border">
+                    <span class="input-group-text bg-transparent fs-7 p-2 text-muted border-0">$</span>
+                    <input type="number" min="0" name="minPrice"
+                      class="filter-min form-control-sm border flex-grow-1 text-muted border-0">
+                  </div>
+                  <div class="input-group mb-0 ms-2 border">
+                    <span class="input-group-text bg-transparent fs-7 p-2 text-muted border-0">$</span>
+                    <input type="number" min="0" name="maxPrice"
+                      class="filter-max form-control-sm flex-grow-1 text-muted border-0">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Price Filter
+          
+                  <!-- Sorting Filter -->
+            <div class="py-4 widget-filter border-top">
+              <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                data-bs-toggle="collapse" href="#filter-modal-sort" role="button" aria-expanded="true"
+                aria-controls="filter-modal-sort">
+                Sort By
+              </a>
+              <div id="filter-modal-sort" class="collapse show">
+                <div class="mt-3">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="sort" id="lowToHigh" value="lowToHigh">
+                    <label class="form-check-label" for="lowToHigh">
+                      Low to High
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sort" id="highToLow" value="highToLow">
+                    <label class="form-check-label" for="highToLow">
+                      High to Low
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Sorting Filter -->
+
+            <!-- Brands Filter -->
+            <!-- <div class="py-4 widget-filter border-top">
+                    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                      data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true"
+                      aria-controls="filter-modal-brands">
+                      Brands
+                    </a>
+                    <div id="filter-modal-brands" class="collapse show">
+                      <div class="input-group my-3 py-1">
+                        <input type="text" class="form-control py-2 filter-search rounded" placeholder="Search"
+                          aria-label="Search">
+                        <span class="input-group-text bg-transparent p-2 position-absolute top-10 end-0 border-0 z-index-20"><i
+                            class="ri-search-2-line text-muted"></i></span>
+                      </div>
+                      <div class="simplebar-wrapper">
+                        <div class="filter-options" data-pixr-simplebar>
+                          <div class="form-group form-check-custom mb-1">
+                            <input type="checkbox" class="form-check-input" name="brands" value="Adidas" id="filter-brands-modal-0">
+                            <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center"
+                              for="filter-brands-modal-0">Adidas <span class="text-muted ms-1 fs-9">(21)</span></label>
+                          </div>
+                          <div class="form-group form-check-custom mb-1">
+                            <input type="checkbox" class="form-check-input" name="brands" value="Asics" id="filter-brands-modal-1">
+                            <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center"
+                              for="filter-brands-modal-1">Asics <span class="text-muted ms-1 fs-9">(13)</span></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+            <!-- / Brands Filter -->
+
+          </div>
+          <!-- / Filters-->
+          <input style="display: none;" type="text" name="categoryId" value="<%= categoryId %>">
+          <!-- Filter Button-->
+          <div class="border-top pt-3">
+            <button style="width: 300px;" class="btn btn-dark mt-2 d-block hover-lift-sm hover-boxshadow" id="doneBtn"
+              aria-label="Close">DONE</button>
+          </div>
+          <!-- /Filter Button-->
+        </div>
+      </div>
+    </div>
+    </div>
+  </form>
+  <script>
+    $(document).ready(function () {
+      $("#sortByDropdown").on("change", function () {
+        var selectedValue = $(this).val();
+        var sortValue = $(this).find('option:selected').data('sort');
+
+        var url = "/displayproducts?sort=" + sortValue + "&categoryId=<%= categoryId %>";
+
+        window.location.href = url;
+      });
+    });
+  </script>
+  <script src="/javascripts/catproducts.js"></script>
+  <script src="/javascripts/productdetails.js"></script>
+
+  <%- include('userPartials/userFooter') %>

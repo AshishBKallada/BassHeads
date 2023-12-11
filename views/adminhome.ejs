@@ -1,0 +1,598 @@
+<%- include('adminPartials/adminHeader') %>
+
+<main class="main-wrap">
+    <header class="main-header navbar">
+        <div class="col-search">
+            <form class="searchform">
+                <div class="input-group">
+                    <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                    <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+                </div>
+                <datalist id="search_terms">
+                    <option value="Products">
+                    <option value="New orders">
+                    <option value="Apple iphone">
+                    <option value="Ahmed Hassan">
+                </datalist>
+            </form>
+        </div>
+        <div class="col-nav">
+            <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link btn-icon" href="#">
+                        <i class="material-icons md-notifications animation-shake"></i>
+                        <span class="badge rounded-pill">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                        <a class="dropdown-item text-brand" href="#"><img src="/adminassets/imgs/theme/flag-us.png" alt="English">English</a>
+                        <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                        <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                        <a class="dropdown-item" href="#"><img src="/adminassets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/adminassets/imgs/people/avatar2.jpg" alt="User"></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                        <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                        <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                        <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                        <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                        <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="/admin/logout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Dashboard </h2>
+                <p>Whole data about your business here </p>
+            </div>
+            <div>
+                <button type="button" style="width: 325px;" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Create Sales Report</button>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Start Date</label>
+                          <input type="date" class="form-control" id="start-date" name="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">End Date</label>
+                            <input type="date" class="form-control" id="end-date" name="endDate">
+                          </div>
+                          
+                            <div class="form-group">
+                              <label for="exampleSelect">Default Filters:</label>
+                              <select class="form-control" id="exampleSelect">
+                                <option value="option1" disabled>Choose</option>
+                                <option value="daily">Daily Sales</option>
+                                <option value="weekly">Weekly Sales</option>
+                                <option value="monthly">Monthly Sales</option>
+                                <option value="yearly">Yearly Sales</option>
+                              </select>
+                            </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-pdf" data-format="pdf">PDF</button>
+                        <button type="button" class="btn btn-primary btn-excel" data-format="excel">Excel</button>                            
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-primary-light"><i class="text-primary material-icons md-monetization_on"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Total Revenue</h6><span><%= totalRevenue[0].totalRevenue%></span>
+                            <span class="text-sm">
+                                Shipping fees are not included
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-success-light"><i class="text-success material-icons md-local_shipping"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Orders</h6> <span><%= orderCount %></span>
+                            <span class="text-sm">
+                                Excluding orders in transit
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-warning material-icons md-qr_code"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Products</h6> <span><%= productCount%></span>
+                            <span class="text-sm">
+                                In <%= categoryCount%> Categories
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-info-light"><i class="text-info material-icons md-shopping_basket"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Monthly Earning</h6> <span>$<%= monthlyRevenue[0].monthlyRevenue%></span>
+                            <span class="text-sm">
+                                Based in your local time.
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 col-lg-12">
+                <div class="card mb-4">
+                    <article class="card-body">
+                        <h5 class="card-title">Sale statistics</h5>
+                        <canvas id="monthlyRevenueChart"></canvas>
+
+                    </article>
+                </div>
+                <div class="card mb-4">
+                    <article class="card-body">
+                        <h5 class="card-title">Product statistics</h5>
+                        <canvas id="productsSoldChart" width="800" height="550"></canvas>
+
+                    </article>
+                </div>
+
+              
+            </div>
+            <div class="col-xl-4 col-lg-12">
+                <div class="card mb-4">
+                    <article class="card-body">
+                      <h5 class="card-title">Order statistics</h5>
+                      <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
+                    </article>
+                  </div>
+                  <div class="card mb-4">
+                    <article class="card-body">
+                      <h5 class="card-title">New User Statistics</h5>
+                      <canvas id="newUsersChart" width="400" height="200"></canvas>
+                    </article>
+                  </div>
+                  <div class="card mb-4">
+                    <article class="card-body">
+                        <h5 class="card-title">Recent Returns</h5>
+                        <ul class="verti-timeline list-unstyled font-sm">
+                            <% returns.forEach(returnItem => { %>
+                                <li class="event-list">
+                                    <div class="event-timeline-dot">
+                                        <i class="material-icons md-play_circle_outline font-xxl"></i>
+                                    </div>
+                                    <div class="media">
+                                        <div class="me-3">
+                                            <h6>
+                                                <span><%= returnItem.createdAt.toLocaleString() %></span>
+                                                <i class="material-icons md-trending_flat text-brand ml-15 d-inline-block"></i>
+                                            </h6>
+                                        </div>
+                                        <div class="media-body">
+                                            <div>
+                                                <strong>User:</strong> <%= returnItem.user.username %> (<%= returnItem.user.email %>)
+                                                <br>
+                                                <strong>Order ID:</strong> <%= returnItem.orderId %>
+                                                <br>
+                                                <strong>Product ID:</strong> <%= returnItem.productId %>
+                                                <br>
+                                                <strong>Return Options:</strong> <%= returnItem.returnOptions %>
+                                                <br>
+                                                <strong>Reason:</strong> <%= returnItem.reason %>
+                                                <br>
+                                                <strong>Status:</strong> <%= returnItem.status %>
+                                                <br>
+                                                <strong>Delivery:</strong> <%= returnItem.delivery %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </article>
+                </div>
+                
+              
+                
+            </div>
+        </div>
+        <div class="card mb-4">
+            <header class="card-header">
+                <h4 class="card-title">Latest orders</h4>
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                        <div class="custom_select">
+                            <select class="form-select select-nice">
+                                <option selected>All Categories</option>
+                                <option>Women's Clothing</option>
+                                <option>Men's Clothing</option>
+                                <option>Cellphones</option>
+                                <option>Computer & Office</option>
+                                <option>Consumer Electronics</option>
+                                <option>Jewelry & Accessories</option>
+                                <option>Home & Garden</option>
+                                <option>Luggage & Bags</option>
+                                <option>Shoes</option>
+                                <option>Mother & Kids</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <input type="date" value="02.05.2022" class="form-control">
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <div class="custom_select">
+                            <select class="form-select select-nice">
+                                <option selected>Status</option>
+                                <option>All</option>
+                                <option>Paid</option>
+                                <option>Chargeback</option>
+                                <option>Refund</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-nowrap mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <!-- <th scope="col" class="text-center">
+                                        <div class="form-check align-middle">
+                                            <input class="form-check-input" type="checkbox" id="transactionCheck01">
+                                            <label class="form-check-label" for="transactionCheck01"></label>
+                                        </div>
+                                    </th> -->
+                                    <th class="align-middle" scope="col">Order ID</th>
+                                    <th class="align-middle" scope="col">Billing Name</th>
+                                    <th class="align-middle" scope="col">Date</th>
+                                    <th class="align-middle" scope="col">Total</th>
+                                    <th class="align-middle" scope="col">Payment Status</th>
+                                    <th class="align-middle" scope="col">Payment Method</th>
+                                    <th class="align-middle" scope="col">View Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% latestOrders.forEach((order)=>{  %>
+                                <tr>
+                                    <!-- <td class="text-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="transactionCheck02">
+                                            <label class="form-check-label" for="transactionCheck02"></label>
+                                        </div>
+                                    </td> -->
+                                    <td><a href="#" class="fw-bold"><%= order._id%></a> </td>
+                                    <td><%= order.user.username %></td>
+                                    <td>
+                                        <%= order.createdAt.toLocaleString('en-US', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            second: 'numeric',
+                                            timeZoneName: 'short'
+                                        }) %>
+                                    </td>
+                                    <td>
+                                        <%= order.grandTotal %>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-pill badge-soft-success">  <%= (order.payment_status ? 'Paid' : 'Unpaid') %>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <i class="material-icons md-payment font-xxl text-muted mr-5"></i> <%= order.paymentMethod %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/orderdetails/<%= order._id %>" class="btn btn-xs"> View details</a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- table-responsive end// -->
+            </div>
+        </div>
+        <div class="pagination-area mt-30 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </section> <!-- content-main end// -->
+    <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+                <script>
+                document.write(new Date().getFullYear())
+                </script> ©, Evara - HTML Ecommerce Template .
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end">
+                    All rights reserved
+                </div>
+            </div>
+        </div>
+    </footer>
+</main>
+
+
+
+
+<!-- Set data attribute in an HTML element -->
+<div id="monthlyRevenueData" data-monthly-revenue='<%= JSON.stringify(monthlyRevenueData) %>'></div>
+
+<!-- Your script tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Access the data attribute
+        const monthlyRevenueDataElement = document.getElementById('monthlyRevenueData');
+        const monthlyRevenueData = JSON.parse(monthlyRevenueDataElement.getAttribute('data-monthly-revenue'));
+
+        // Create an array of months with zero values for missing months
+        const allMonths = Array.from({ length: 12 }, (_, i) => i + 1);
+        const filledData = allMonths.map(month => {
+            const dataEntry = monthlyRevenueData.find(entry => entry.month === month);
+            return dataEntry || { month, year: new Date().getFullYear(), totalRevenue: 0 };
+        });
+
+        // Continue with your chart rendering logic
+        const labels = filledData.map(entry => `${getMonthName(entry.month)} ${entry.year}`);
+        const data = filledData.map(entry => entry.totalRevenue);
+
+        // Creating the line chart
+        const ctx = document.getElementById('monthlyRevenueChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'category',
+                        labels: labels,
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+    // Helper function to get month name
+    function getMonthName(monthNumber) {
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return months[monthNumber - 1];
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('/admin/sellproduct'); 
+      const data = await response.json();
+
+      const labels = data.map(item => `${item._id.year}-${item._id.month}`);
+      const values = data.map(item => item.totalProductsSold);
+
+      const ctx = document.getElementById('productsSoldChart').getContext('2d');
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Products Sold',
+            data: values,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'category',
+              title: {
+                display: true,
+                text: 'Month'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Number of Products Sold'
+              }
+            }
+          },
+         
+        }
+      });
+    });
+</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('/admin/orderno'); // Replace with your actual backend endpoint
+      const data = await response.json();
+  
+      const labels = data.map(item => `${item._id.year}-${item._id.month}`);
+      const values = data.map(item => item.totalOrders);
+  
+      const ctx = document.getElementById('monthlyOrdersChart').getContext('2d');
+  
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Number of Orders by Month'
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('/admin/monthlyusers');
+      const data = await response.json();
+  
+      const labels = data.map(item => `${item._id.year}-${item._id.month}`);
+      const values = data.map(item => item.newUserCount);
+  
+      const ctx = document.getElementById('newUsersChart').getContext('2d');
+  
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'New Users',
+            data: values,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(128, 128, 128, 0.6)', // Grey
+              'rgba(255, 0, 255, 0.6)',  // Magenta
+              'rgba(0, 255, 255, 0.6)'   // Cyan
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(128, 128, 128, 1)', // Grey
+              'rgba(255, 0, 255, 1)',  // Magenta
+              'rgba(0, 255, 255, 1)'   // Cyan
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'category',
+              title: {
+                display: true,
+                text: 'Month'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Number of New Users'
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/javascripts/salesreport.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<%- include('adminPartials/adminFooter') %>

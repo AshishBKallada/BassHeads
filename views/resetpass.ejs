@@ -1,0 +1,57 @@
+<%- include('userPartials/userheader') %>
+<center>
+
+<form action="/resetpassword" method="POST">
+  
+    <div class="form-group">
+       
+
+      </div>
+      <div style="width:500px;" class="form-group">
+        <label for="login-password" class="form-label d-flex justify-content-between align-items-center">
+         New Password
+        </label>
+        <input type="text" value="<%= token %>" name="token" style="display: none;">
+        <input name="npassword" type="password" class="form-control" id="new-password" placeholder="Enter your password">
+        <div style="color: red;" id="npasswordError" class="error-message"></div>
+
+        <label for="login-password" class="form-label d-flex justify-content-between align-items-center">
+        Confirm Password
+        </label>
+        <input name="cpassword" type="password" class="form-control" id="confirm-password" placeholder="Enter your password">
+        <div style="color: red;" id="passwordError" class="error-message"></div>
+      </div>
+      <div style="color: red;" id="cpasswordError" class="error-message"></div>
+      <div style="color: red;" id="passwordError" class="error-message"></div>
+
+      <button type="submit" onclick="validatePass()" class="btn btn-dark d-block w-100 my-4">Login</button>
+  </form>
+</center>
+<script>
+  function validatePass() {
+   const npass = document.getElementById('new-password').value;
+   const cpass = document.getElementById('confirm-password').value;
+
+   document.getElementById('npasswordError').textContent = '';
+   document.getElementById('cpasswordError').textContent = '';
+
+
+   if (npass.trim() === '') {
+       document.getElementById('npasswordError').textContent = 'Please enter your password.';
+       event.preventDefault(); 
+   }
+
+   if (cpass.trim() === '') {
+       document.getElementById('cpasswordError').textContent = 'Please enter your password.';
+       event.preventDefault(); 
+   }
+   if(npass && cpass)
+   {
+   if (npass!==cpass) {
+       document.getElementById('passwordError').textContent = 'Passwords do not match';
+       event.preventDefault(); 
+   }
+  } 
+}
+</script>
+<%- include('userPartials/userfooter') %>
