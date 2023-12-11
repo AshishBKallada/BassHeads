@@ -1,54 +1,36 @@
- var createError = require('http-errors');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var adminRouter = require('./routes/admin');
-var usersRouter = require('./routes/users');
-
-const http = require('http');
-
+// app.js
 const express = require('express');
 const session = require('express-session');
-const app = express();
+const createError = require('http-errors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const fileUpload = require('express-fileupload');
+const http = require('http');
+const debug = require('debug')('project1:server');
+
+const adminRouter = require('./routes/admin');
+const usersRouter = require('./routes/users');
 
 require('dotenv').config();
 
+const app = express();
 
 app.use(session({
-  secret: 'your-secret-key',
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: true,
   cookie: {
     maxAge: 3600000,
   },
 }));
-global.signupData = {};
 
-
+app.use(fileUpload());
 app.use('/uploads', express.static('uploads'));
 
-app.use((req, res, next) => {
-  if (req.files && req.files.variants) {
-    req.body.variants = req.files.variants.map((variant, index) => ({
-      color: req.body[`variants[${index}][color]`],
-      stock: req.body[`variants[${index}][stock]`],
-      images: variant.map(file => ({
-        filename: file.filename,
-      })),
-    }));
-  }
-  next();
-});
 
-
-const { log } = require('console');
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -59,24 +41,64 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRouter);
 app.use('/', usersRouter);
 
-
-
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
-module.exports = app;
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+const server = http.createServer(app);
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    return val;
+  }
+
+  if (port >= 0) {
+    return port;
+  }
+
+  return false;
+}
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
