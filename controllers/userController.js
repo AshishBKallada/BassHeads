@@ -1,7 +1,6 @@
 const { users } = require('./adminController');
 const { User, product, cart, addressModel, orderModel, category, couponModel, walletModel, ReturnModel, bannerModel } = require('../config/model');
 const nodemailer = require('nodemailer');
-const { getMaxListeners } = require('../app');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const jwt=require('jsonwebtoken');
