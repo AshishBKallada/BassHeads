@@ -366,10 +366,12 @@ let productdetails = async (req, res, next) => {
   const id = req.params.productId;
   const productdetails = await product.findOne({ _id: id });
   const relProducts=await product.find();
+  let categories = await category.find({ active: 'true' })
+
   if (productdetails) {
     console.log('productdetails fetched');
     console.log(productdetails);
-    res.render('page-productdetails', { productdetails: productdetails,relProducts });
+    res.render('page-productdetails', { productdetails: productdetails,relProducts,categories });
   }
 }
 
