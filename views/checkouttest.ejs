@@ -114,24 +114,8 @@
                                                             <span class="text-muted fw-normal d-block"><%- address.addresses[0].street %></span>
                                                             <span class="text-muted fw-normal d-block">                                                            <%- address.addresses[0].landmark %>
                                                             </span>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAddressModal">
-                                                                <i class="bx bx-pencil font-size-16"></i>
-                                                             </button>
-                                                             <div class="modal fade" id="updateAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                  <div class="modal-content">
-                                                                   
-                                                                    <div class="modal-header">
-                                                                      <h5 class="modal-title" id="addAddressModalLabel">Update Address</h5>
-                                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                      </button>
-                                                                    </div>
-                                                                
                                                             
-                                                                  </div>
-                                                                </div>
-                                                              </div>
+                                                             
                                                         </div>
                                                     </label>
                                                         
@@ -394,6 +378,7 @@
                          </div>
                          <div class="py-4">
                             <div class="input-group mb-3">
+                                <div style="color: red;" id="couponError"></div>
                               <input style=" width: 400px;margin-left: 150px;" type="text"  placeholder="Enter your coupon code" id="coupon">
                               <button class="btn btn-dark btn-sm px-4" onclick="applyCoupon('<%= cartData.selectedTotal %>')">Apply</button>
                             </div>
@@ -422,7 +407,7 @@
             <div class="card checkout-order-summary">
                 <div class="card-body">
                     <div class="p-3 bg-light mb-3">
-                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end ms-2">#MN0124</span></h5>
+                        <h5 class="font-size-16 mb-0">Order Summary </h5>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-centered mb-0 table-nowrap">
@@ -473,10 +458,10 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Discount :</h5>
+                                        <h5 class="font-size-14 m-0" >Discount :</h5>
                                     </td>
-                                    <td>
-                                        - $ 78
+                                    <td id="discountDisplay">
+                                        ₹ 0.00
                                     </td>
                                 </tr>
 
@@ -485,7 +470,7 @@
                                         <h5 class="font-size-14 m-0">Shipping Charge :</h5>
                                     </td>
                                     <td>
-                                        $ 25
+                                        ₹ 40
                                     </td>
                                 </tr>
                                 <tr>
@@ -493,7 +478,7 @@
                                         <h5 class="font-size-14 m-0">Estimated Tax :</h5>
                                     </td>
                                     <td>
-                                        $ 18.20
+                                        ₹ 100.20
                                     </td>
                                 </tr>                              
                                     
@@ -502,7 +487,7 @@
                                         <h5 class="font-size-14 m-0">Total:</h5>
                                     </td>
                                     <td id="Total">
-                                        ₹<%= cartData.selectedTotal + 450 %>
+                                        ₹<%= cartData.selectedTotal + 140 %>
                                     </td>
                                 </tr>
                             </tbody>

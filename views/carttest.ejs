@@ -12,18 +12,20 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item ">
-          <a class="nav-link" href="/home"> Home</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/cart">Cart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/shipping">Checkout</a>
-        </li>
-       
-      </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home"> Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/cart">Cart</a>
+            </li>
+            <% if (cart.products) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shipping">Checkout</a>
+                </li>
+            <% } %>
+        </ul>
+        
     </div>
   </nav>
 
@@ -114,12 +116,21 @@
                     <a href="ecommerce-products.html" class="btn btn-link text-muted">
                         <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                 </div> <!-- end col -->
+                <% if(cart.products){ %>
                 <div class="col-sm-6">
                     <div class="text-sm-end mt-2 mt-sm-0">
                         <a href="/shipping" class="btn btn-success">
                             <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
                     </div>
                 </div> <!-- end col -->
+                <% }else{ %>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end mt-2 mt-sm-0">
+                            <a href="/home" class="btn btn-primary">
+                                <i class="mdi mdi-cart-outline me-1"></i> No itmes in cart,shop some ? </a>
+                        </div>
+                    </div> <!-- end col -->
+                    <% } %>
             </div> <!-- end row-->
         </div>
 
@@ -127,7 +138,7 @@
             <div class="mt-5 mt-lg-0">
                 <div class="card border shadow-none">
                     <div class="card-header bg-transparent border-bottom py-3 px-4">
-                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
+                        <h5 class="font-size-16 mb-0">Order Summary</h5>
                     </div>
                     <div class="card-body p-4 pt-2">
 
@@ -136,25 +147,19 @@
                                 <tbody>
                                     <tr>
                                         <td>Sub Total :</td>
-                                        <td class="text-end">$ 780</td>
+                                        <td class="text-end">₹<%= cart.selectedTotal %></td>
                                     </tr>
-                                    <tr>
-                                        <td>Discount : </td>
-                                        <td class="text-end">- $ 78</td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td>Shipping Charge :</td>
-                                        <td class="text-end">$ 25</td>
+                                        <td class="text-end">₹ 40</td>
                                     </tr>
-                                    <tr>
-                                        <td>Estimated Tax : </td>
-                                        <td class="text-end">$ 18.20</td>
-                                    </tr>
+                                  
                                     <tr class="bg-light">
                                         <th>Total :</th>
                                         <td class="text-end">
                                             <span class="fw-bold" id="cartTotal">
-                                                ₹<%= cart.selectedTotal %>
+                                                ₹<%= cart.selectedTotal + 40 %>
                                             </span>
                                         </td>
                                     </tr>

@@ -18,6 +18,11 @@ function selectPaymentMethod(paymethod) {
 
 function confirmorder() {
   try {
+    if (!addressId || !payment) {
+      alert('Please select both address and payment method before placing the order.');
+      return; 
+    }
+
     const sessionTotal = sessionStorage.getItem('updatedValue');
     Swal.fire({
       title: 'Confirm your order?',
@@ -110,17 +115,22 @@ function confirmorder() {
 async function applyCoupon(total) {
   const cartTotal = total;
   const selectTotal = document.getElementById("selectedTotal")
+  const couponError=document.getElementById("couponError");
   const Total = document.getElementById("Total")
-
+  const discountDisplay= document.getElementById("discountDisplay")
   const couponCode = document.getElementById("coupon").value;
   const response = await fetch(`/coupon?code=${couponCode}`);
 
   if (response.ok) {
     const discount = await response.json();
+    if(!discount){
+      couponError.textContent="Invalid Coupon Code";
+    }
     const discountValue = Number(discount);
 
     if (!isNaN(discountValue)) {
       const updatedValue = cartTotal - (cartTotal * discountValue / 100);
+      discountDisplay.textContent = cartTotal * discountValue / 100;
       selectTotal.textContent = '₹' + updatedValue.toFixed(2);
       Total.textContent = '₹' + (updatedValue + 450);
       const sessionValue = updatedValue + 450;
