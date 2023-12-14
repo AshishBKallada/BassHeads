@@ -601,15 +601,9 @@ const logout = (req, res, next) => {
 let orderview = async (req, res, next) => {
   const orderData = await orderModel.find().sort({ createdAt: -1 });
   if (orderData) {
-    console.log('Order data fetched');
-    for (const item of orderData) {
-      console.log(item);
-      item.username = await User.findOne({ _id: item.user })
-      item.addressData = await addressModel.findOne({ _id: item.address })
-      console.log(item.username);
-      console.log(item.addressData);
-    }
     console.log(orderData);
+    console.log('Order data fetched');
+
     res.render('orders', { orderData });
   }
 }
@@ -680,16 +674,9 @@ let orderdetails = async (req, res, next) => {
   console.log(productData);
 
 
-  //addressData fetch
 
-  const findOrder = await orderModel.findById({ _id: orderId });
-  const addressId = findOrder.address;
-  const addressData = await addressModel.findById({ _id: addressId })
-  console.log(addressData);
-
-  //addressData fetch
   if (orderData) {
-    res.render('page-orders-detail', { orderData, userData, productData, addressData });
+    res.render('page-orders-detail', { orderData, userData, productData });
   }
 }
 
@@ -1290,15 +1277,15 @@ let editremoveproduct = async (req, res, next) => {
 
 let lowstock = async function (req, res, next) {
   try {
-    if (req.query.category && req.query.productId) {
+    console.log('efffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
+    if (req.query.category) {
       const categoryId = req.query.category;
-      const productId = req.query.productId;
-
-      const products = await product.find({ _id: productId, category: categoryId, stock: { $lte: 100 } });
+      console.log(categoryId);
+      const products = await product.find({ category: categoryId, stock: { $lte: 100 } });
       const categories = await category.find();
       console.log(categories);
       console.log(products);
-      res.render('lowstock', { products, categories });
+      res.render('lowstock', {categories,products  });
     } else {
       const products = await product.find({ stock: { $lte: 100 } });
       const categories = await category.find();

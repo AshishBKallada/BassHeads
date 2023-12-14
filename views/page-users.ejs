@@ -59,11 +59,9 @@
             <div class="content-header">
                 <div>
                     <h2 class="content-title card-title">Users </h2>
-                    <p>Add, edit or delete a user</p>
+                    <p>User Management</p>
                 </div>
-                <div>
-                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
-                </div>
+               
             </div>
             <div class="card">
                 <div class="card-body">
@@ -77,7 +75,7 @@
                                             <th class="text-center">
                                                
                                             </th>
-                                            <th>ID</th>
+                                            <th>SI.No</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Status</th>
@@ -85,16 +83,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% userData.forEach((user) => { %>
+                                        <% userData.forEach((user,index) => { %>
                                             <tr>
                                             <td class="text-center">
                                               
                                             </td>
-                                            <td>21</td>
+                                            <td><%= index +1%></td>
                                             <td><b><%=user.username %></b></td>
                                             <td><%=user.email %></td>
                                             <td><%= (user.status === true)? 'Active':'Blocked' %></td>
-                                            <td ><button style="width: 300px;" class="<%= (user.status === true) ? 'bg-danger' : 'bg-success' %> p-2 w-50 text-light" style="border-radius: 20px;" id="userstatus<%= user._id %>" onclick="blockUser('<%=user._id%>')" id="blockButton<%=user._id%>" ><%= (user.status === true) ? 'Block' : 'Unblock' %></button></td>
+                                            <td class="text-end"><button style="width: 500px;" class="<%= (user.status === true) ? 'btn btn-danger' : 'btn btn-primary' %> p-2 w-50 text-light"  id="userstatus<%= user._id %>" onclick="blockUser('<%=user._id%>')" id="blockButton<%=user._id%>" ><%= (user.status === true) ? 'Block' : 'Unblock' %></button></td>
 
                     
                                             </td>

@@ -84,6 +84,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <!-- Iterate through categories and generate links -->
                             <% categories.forEach((category) => { %>
+                              
                                 <a class="dropdown-item"
                                     href="/displayproducts?categoryId=<%= category._id %>"><%= category.category %></a>
                             <% }); %>

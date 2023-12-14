@@ -1,14 +1,9 @@
 async function blockUser(id) {
-    // let Btn = document.getElementById("userstatus" + id);
-    // if (Btn.style.background === 'orangered') {
-    //     Btn.style.background = 'green';
-    // } else if (Btn.style.background === 'green') {
-    //     Btn.style.background = 'orangered';
-    // }
+   
 
     try {
         Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: 'Change user block status ?',
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Save',
@@ -24,7 +19,7 @@ async function blockUser(id) {
                 });
 
                 if (response.ok) {
-                    await Swal.fire('Saved!', '', 'success')
+                    await Swal.fire('Block status changed !', '', 'success')
                     location.reload();
                 } else {
                     console.error('Failed to block the user. Status code:', response.status);

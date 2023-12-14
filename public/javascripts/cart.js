@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     decBtns.forEach((decBtn, index) => {
         decBtn.addEventListener("click", function () {
-            alert('-')
             const currentQuantity = parseInt(inputBoxes[index].value);
             if (currentQuantity > 1) {
                 const newQuantity = currentQuantity - 1;
@@ -25,8 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function updatefn(productId, quantity) {
-        alert(productId)
-        alert(quantity)
+
         fetch('/updateqn', {
             method: 'POST',
             headers: {
@@ -34,38 +32,36 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({ productId, quantity })
         })
-        .then((response) => {
-            if (response.ok) {
-                location.reload();
-                console.log('Quantity updated successfully');
-            } else {
-                console.error('Error updating quantity');
-            }
-        })
-        .catch((error) => {
-            console.error('Fetch error', error);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    location.reload();
+                    console.log('Quantity updated successfully');
+                } else {
+                    console.error('Error updating quantity');
+                }
+            })
+            .catch((error) => {
+                console.error('Fetch error', error);
+            });
     }
 });
 
 
 async function tickbox(id) {
-    //   alert('called')
     try {
-      const response = await fetch('/selectproduct', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-      });
-  
-      if(response.status) {
-console.log('product selected');
-     }
-    } 
-    catch (error) {
-      console.error('An error occurred:', error);
+        const response = await fetch('/selectproduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id }),
+        });
+
+        if (response.status) {
+            location.reload();
+        }
     }
-  };
-  
+    catch (error) {
+        console.error('An error occurred:', error);
+    }
+};

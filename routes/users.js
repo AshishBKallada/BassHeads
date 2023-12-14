@@ -5,14 +5,15 @@ const isBlocked = require('../middleware/userBlock');
 const isAuth=require('../middleware/isAuth');
 const jwtAuth = require('../middleware/jwtAuth');
 
+router.get('/', middleware.landing)
 router.get('/login',middleware.userlogin);
 router.post('/loginsub',isBlocked,middleware.loginsub);
-router.get('/signup',jwtAuth, middleware.signup);
-router.post('/signupsub',jwtAuth, middleware.signupsub);
+router.get('/signup', middleware.signup);
+router.post('/signupsub', middleware.signupsub);
 router.get('/logout',jwtAuth,middleware.logout);
-router.post('/verifyotp',jwtAuth,middleware.verifyotp);
-router.get('/home',jwtAuth,isAuth,middleware.userhome);
-router.get('/displayproducts',jwtAuth,middleware.displayproducts);
+router.post('/verifyotp',middleware.verifyotp);
+router.get('/home',isAuth,middleware.userhome);
+router.get('/displayproducts',middleware.displayproducts);
 router.get('/productdetails/:productId',middleware.productdetails);
 router.get('/test',middleware.test);
 router.get('/logout',middleware.logout);

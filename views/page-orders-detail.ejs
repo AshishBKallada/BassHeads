@@ -58,7 +58,7 @@
             <div class="content-header">
                 <div>
                     <h2 class="content-title card-title">Order detail</h2>
-                    <p>Details for Order ID: <%= orderData._id %></p>
+                    <p>Details for Order ID: <%= orderData.Id %></p>
                 </div>
             </div>
             <div class="card">
@@ -66,9 +66,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
                             <span>
-                                <i class="material-icons md-calendar_today"></i> <b><%= orderData.createdAt %></b>
+                                <i class="material-icons md-calendar_today"></i> <b><%= orderData.createdAt.toLocaleString() %></b>
                             </span> <br>
-                            <small class="text-muted">Order ID: <%= orderData._id %></small>
+                            <small class="text-muted">Order ID: <%= orderData.Id %></small>
                         </div>
                         <div class="col-lg-6 col-md-6 ms-auto text-md-end">
 
@@ -106,7 +106,7 @@
                                 <div class="text">
                                     <h6 class="mb-1"><%= %></h6>
                                     <p class="mb-1">
-                                        Username:<%= userData[0].username%><br>E-mail:<%= userData[0].email%> <br>Ph No:<%= addressData.contacts[0].phno %>  
+                                        Username:<%= userData[0].username%><br>E-mail:<%= userData[0].email%> <br>Ph No:<%= orderData.address.contacts[0].phno %>  
                                     </p>
                                     <a href="#">View profile</a>
                                 </div>
@@ -134,8 +134,8 @@
                                 <div class="text">
                                     <h6 class="mb-1">Deliver to</h6>
                                     <p class="mb-1">
-                                        Country:<%= addressData.addresses[0].country %> <br> State:<%= addressData.addresses[0].state %>  <br>
-                                        District:<%= addressData.addresses[0].district %>  <br>  City: <%= addressData.addresses[0].city %> <br>Landmark:<%= addressData.addresses[0].landmark %> <br>Pincode: <%= addressData.addresses[0].pincode %>
+                                        Country:<%= orderData.address.addresses[0].country %> <br> State:<%= orderData.address.addresses[0].state %>  <br>
+                                        District:<%= orderData.address.addresses[0].district %>  <br>  City: <%= orderData.address.addresses[0].city %> <br>Landmark:<%= orderData.address.addresses[0].landmark %> <br>Pincode: <%= orderData.address.addresses[0].pincode %>
                                     </p>
                                     <a href="#">View profile</a>
                                 </div>

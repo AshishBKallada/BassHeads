@@ -3,11 +3,16 @@ const { User, product, cart, addressModel, orderModel, category, couponModel, wa
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const jwt=require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const ObjectID = mongoose.Types.ObjectId;
-var easyinvoice = require('easyinvoice');                          
+var easyinvoice = require('easyinvoice');
 const { razorpay } = require('../utils/razorpay');
+
+
+let landing=async(req, res,next) => {
+  res.render('landingpage')
+}
 
 let userlogin = (req, res, next) => {
   console.log(req.session.user);
@@ -40,7 +45,7 @@ let loginsub = async (req, res, next) => {
     req.session.user = user.id;
 
     const token = jwt.sign({ sub: user.id, username: user.username }, process.env.secretKey, { expiresIn: '1h' });
-    res.cookie('user', token, { httpOnly: true, maxAge: 3600000 }); 
+    res.cookie('user', token, { httpOnly: true, maxAge: 3600000 });
 
     return res.redirect('/home')
   } catch (error) {
@@ -365,13 +370,13 @@ const displayproducts = async (req, res, next) => {
 let productdetails = async (req, res, next) => {
   const id = req.params.productId;
   const productdetails = await product.findOne({ _id: id });
-  const relProducts=await product.find();
+  const relProducts = await product.find();
   let categories = await category.find({ active: 'true' })
-
+  console.log(categories);
   if (productdetails) {
     console.log('productdetails fetched');
     console.log(productdetails);
-    res.render('page-productdetails', { productdetails: productdetails,relProducts,categories });
+    res.render('page-productdetails', { productdetails: productdetails, relProducts, categories });
   }
 }
 
@@ -640,7 +645,7 @@ const shipping = async (req, res, next) => {
 
     const selectedProducts = Cart.products.filter((item) => item.selected);
     const grandTotal = sessionTotal || Cart.selectedTotal;
-const address= await addressModel.findById(addressId);
+    const address = await addressModel.findById(addressId);
 
     const orderData = {
       user: userId,
@@ -668,15 +673,15 @@ const address= await addressModel.findById(addressId);
       const insertOrder = await orderModel.insertMany(orderData);
 
       if (insertOrder) {
-        console.log('iD------------------------------------------------------------',insertOrder[0]._id);
+        console.log('iD------------------------------------------------------------', insertOrder[0]._id);
         const userWallet = await walletModel.findOne({ user: req.session.user });
         userWallet.balance -= grandTotal;
 
         userWallet.transactions.push({
-          type:'credit',
-          amount:grandTotal,
-          orderId:insertOrder._id,
-          reason:'Order'
+          type: 'credit',
+          amount: grandTotal,
+          orderId: insertOrder._id,
+          reason: 'Order'
         })
         await userWallet.save();
 
@@ -701,20 +706,20 @@ const address= await addressModel.findById(addressId);
 
           await Product.save();
         }
-        console.log('SELECTED PRODUCT price : '+totalSelectedProductsPrice);
+        console.log('SELECTED PRODUCT price : ' + totalSelectedProductsPrice);
 
 
         const clearCart = await cart.updateOne(
           { user: userId },
           {
             $pull: { products: { selected: true } },
-            $inc: { total: -totalSelectedProductsPrice,selectedTotal:-totalSelectedProductsPrice }
+            $inc: { total: -totalSelectedProductsPrice, selectedTotal: -totalSelectedProductsPrice }
           }
         );
-        if(clearCart.success) {
+        if (clearCart.success) {
           console.log('Cart cleared');
         }
-      
+
         console.log('Order added successfully');
         return res.status(200).json({ status: true });
       }
@@ -771,7 +776,7 @@ const address= await addressModel.findById(addressId);
           await Product.save();
         }
 
-       
+
 
         console.log(totalSelectedProductsPrice);
         const clearCart = await cart.updateOne(
@@ -839,6 +844,7 @@ let selectproduct = async (req, res, next) => {
     const updatedCart = await Cart.save();
     if (updatedCart) {
       console.log('Product selected status changed');
+      res.status(200).send();
     }
   }
 }
@@ -875,14 +881,14 @@ let showaccount = async (req, res, next) => {
   const transactions = wallet[0].transactions;
   console.log("TRANSACTIONS", transactions);
 
-  res.render('page-account', { products, categories, order, user, addressData, user, referalLink, walletBalance , transactions});
+  res.render('page-account', { products, categories, order, user, addressData, user, referalLink, walletBalance, transactions });
 }
 let cancelorder = async (req, res, next) => {
   try {
     const { productId, orderId, reason } = req.body;
     console.log(req.body);
     const order = await orderModel.findById(orderId);
-    const paymentMethod=order.paymentMethod;
+    const paymentMethod = order.paymentMethod;
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
@@ -896,24 +902,24 @@ let cancelorder = async (req, res, next) => {
 
     order.products[productIndex].cancelstatus = true;
     order.products[productIndex].cancelreason = reason;
-    
-    const amount=order.products[productIndex].total;
+
+    const amount = order.products[productIndex].total;
     await order.save();
 
-    console.log('TOTAL:',amount);
-if(paymentMethod === 'wallet' || paymentMethod === 'Razorpay'){
+    console.log('TOTAL:', amount);
+    if (paymentMethod === 'wallet' || paymentMethod === 'Razorpay') {
 
-    const userWallet=await walletModel.findOne({user:req.session.user});
+      const userWallet = await walletModel.findOne({ user: req.session.user });
 
-    userWallet.balance -= amount;
-    userWallet.transactions.push({
-      type:'debit',
-      amount: amount,
-      reason:'Order Cancellation',
-      orderId:orderId,
-    });
-  await userWallet.save();
-}
+      userWallet.balance -= amount;
+      userWallet.transactions.push({
+        type: 'debit',
+        amount: amount,
+        reason: 'Order Cancellation',
+        orderId: orderId,
+      });
+      await userWallet.save();
+    }
 
     console.log('Cancel status updated');
     return res.status(200).json({ message: 'Cancel status updated successfully' });
@@ -1435,98 +1441,98 @@ let resendotp = async (req, res, next) => {
 
 }
 
-let invoice =async(req,res,next) =>{
-  const orderId=req.query.id;
+let invoice = async (req, res, next) => {
+  const orderId = req.query.id;
   console.log(orderId);
-  const order=await orderModel.findById(orderId).populate('address').populate('user');
-  
-  for(const item of order.products) {
-const Product=await product.findById(item.product)
-item.productName=Product.name;
-item.price=Product.price;
+  const order = await orderModel.findById(orderId).populate('address').populate('user');
+
+  for (const item of order.products) {
+    const Product = await product.findById(item.product)
+    item.productName = Product.name;
+    item.price = Product.price;
 
   }
 
 
-const data={        // "customize": {
-        //     "template": "SGVsbG8gd29ybGQh" // Must be base64 encoded html. This example contains 'Hello World!' in base64
-        // },
-        images: {
-            logo: 'https://public.easyinvoice.cloud/img/logo_en_original.png',
-            background: 'https://public.easyinvoice.cloud/img/watermark-draft.jpg'
-        },
-        sender: {
-            company: 'BassHeads',
-            address: 'Maradu,Kundanoor',
-            zip: '686671',
-            city: 'Ernakulam',
-            country: 'India'
-            // "custom1": "custom value 1",
-            // "custom2": "custom value 2",
-            // "custom3": "custom value 3"
-        },
-        client: {
-            company:order.address.name,
-            address: order.address.addresses[0].street,
-            zip:order.address.addresses[0].pincode,
-            city: order.address.addresses[0].city,
-            country: order.address.addresses[0].country
-            // "custom1": "custom value 1",
-            // "custom2": "custom value 2",
-            // "custom3": "custom value 3"
-        },
-        information: {
-            number: order.address.contacts[0].phno,
-            date: '12-12-2021',
-            'due-date': '31-12-2021'
-        },
-        products: order.products.map(item => ({
-          quantity: item.quantity,
-          description: item.productName, 
-          price: item.price
-        })),
-        'bottom-notice': 'Kindly pay your invoice within 15 days.',
-        settings: {
-            currency: 'INR' // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
-            // "locale": "nl-NL", // Defaults to en-US, used for number formatting (see docs)
-            // "margin-top": 25, // Default to 25
-            // "margin-right": 25, // Default to 25
-            // "margin-left": 25, // Default to 25
-            // "margin-bottom": 25, // Default to 25
-            // "format": "Letter", // Defaults to A4,
-            // "height": "1000px", // allowed units: mm, cm, in, px
- 		        // "width": "500px", // allowed units: mm, cm, in, px
-     		    // "orientation": "landscape", // portrait or landscape, defaults to portrait
-        },
-        // Used for translating the headers to your preferred language
-        // Defaults to English. Below example is translated to Dutch
-        "translate": {
-        //     "invoice": "FACTUUR",
-        //     "number": "Nummer",
-        //     "date": "Datum",
-        //     "due-date": "Verloopdatum",
-        //     "subtotal": "Subtotaal",
-        //     "products": "Producten",
-        //     "quantity": "Aantal",
-        //     "price": "Prijs",
-        //     "product-total": "Totaal",
-        //     "total": "Totaal"
-        //		 "vat": "btw"
-        },
+  const data = {        // "customize": {
+    //     "template": "SGVsbG8gd29ybGQh" // Must be base64 encoded html. This example contains 'Hello World!' in base64
+    // },
+    images: {
+      logo: 'https://public.easyinvoice.cloud/img/logo_en_original.png',
+      background: 'https://public.easyinvoice.cloud/img/watermark-draft.jpg'
+    },
+    sender: {
+      company: 'BassHeads',
+      address: 'Maradu,Kundanoor',
+      zip: '686671',
+      city: 'Ernakulam',
+      country: 'India'
+      // "custom1": "custom value 1",
+      // "custom2": "custom value 2",
+      // "custom3": "custom value 3"
+    },
+    client: {
+      company: order.address.name,
+      address: order.address.addresses[0].street,
+      zip: order.address.addresses[0].pincode,
+      city: order.address.addresses[0].city,
+      country: order.address.addresses[0].country
+      // "custom1": "custom value 1",
+      // "custom2": "custom value 2",
+      // "custom3": "custom value 3"
+    },
+    information: {
+      number: order.address.contacts[0].phno,
+      date: '12-12-2021',
+      'due-date': '31-12-2021'
+    },
+    products: order.products.map(item => ({
+      quantity: item.quantity,
+      description: item.productName,
+      price: item.price
+    })),
+    'bottom-notice': 'Kindly pay your invoice within 15 days.',
+    settings: {
+      currency: 'INR' // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+      // "locale": "nl-NL", // Defaults to en-US, used for number formatting (see docs)
+      // "margin-top": 25, // Default to 25
+      // "margin-right": 25, // Default to 25
+      // "margin-left": 25, // Default to 25
+      // "margin-bottom": 25, // Default to 25
+      // "format": "Letter", // Defaults to A4,
+      // "height": "1000px", // allowed units: mm, cm, in, px
+      // "width": "500px", // allowed units: mm, cm, in, px
+      // "orientation": "landscape", // portrait or landscape, defaults to portrait
+    },
+    // Used for translating the headers to your preferred language
+    // Defaults to English. Below example is translated to Dutch
+    "translate": {
+      //     "invoice": "FACTUUR",
+      //     "number": "Nummer",
+      //     "date": "Datum",
+      //     "due-date": "Verloopdatum",
+      //     "subtotal": "Subtotaal",
+      //     "products": "Producten",
+      //     "quantity": "Aantal",
+      //     "price": "Prijs",
+      //     "product-total": "Totaal",
+      //     "total": "Totaal"
+      //		 "vat": "btw"
+    },
 
-  
-}
 
-console.log(data);
+  }
 
-await easyinvoice.createInvoice(data,(result)=>{
-  const base64=result.pdf;
-  res.setHeader('Content-Type', 'application/pdf');
-  res.setHeader('Content-Disposition', `attachment; filename="INVOICE_${Date.now()}.pdf"`);
-  const binaryData=Buffer.from(base64,'base64');
-  console.log('123');
-  res.send(binaryData)
-});
+  console.log(data);
+
+  await easyinvoice.createInvoice(data, (result) => {
+    const base64 = result.pdf;
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="INVOICE_${Date.now()}.pdf"`);
+    const binaryData = Buffer.from(base64, 'base64');
+    console.log('123');
+    res.send(binaryData)
+  });
 
 
 }
@@ -1534,7 +1540,7 @@ await easyinvoice.createInvoice(data,(result)=>{
 
 
 module.exports = {
-  userlogin, loginsub, signup,
+  landing,userlogin, loginsub, signup,
   signupsub, logout, verifyotp,
   userhome, displayproducts,
   productdetails, test, addtocart,
@@ -1550,6 +1556,6 @@ module.exports = {
   searchproduct, returnrequest, showconfirm,
   updateaddressx, authreferral, getreferal,
   showaddressedit, editaddress, wishlistadd
-  ,invoice
+  , invoice
 
 };

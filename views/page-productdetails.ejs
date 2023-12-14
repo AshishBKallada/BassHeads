@@ -1,11 +1,5 @@
 <%- include ('userPartials/userheader')%>
 
-<!doctype html>
-<html lang="en">
-
-<!-- Head -->
-<head>
-
     <link rel="stylesheet" href="/stylesheets/css/zoom.css">
     <link rel="stylesheet" href="/stylesheets/css/productdetails.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -13,12 +7,6 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!-- Page Meta Tags-->
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <meta name="keywords" content="">
 
   <!-- Custom Google Fonts-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -42,13 +30,16 @@
 
   <!-- Fix for custom scrollbar if JS is disabled-->
  
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Page Title -->
-  <title>BassHeads</title>
+  <!-- Optional: Bootstrap Icons (if needed) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.15.0/font/bootstrap-icons.css" rel="stylesheet">
 
-</head>
-<body>
+  <!-- jQuery (required for Bootstrap's JavaScript components) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
+  <!-- Bootstrap JS (and Popper.js for Bootstrap 4) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
    
 
     <!-- Navbar -->
@@ -59,7 +50,7 @@
     <!-- Main Section-->
     <section class="mt-0 ">
         <!-- Page Content Goes Here -->            
-        
+      
         <!-- Breadcrumbs-->
         <div class="bg-dark py-6">
             <div class="container-fluid">
@@ -108,7 +99,7 @@
                                         <li><img src="https://source.unsplash.com/featured?TecHnology" alt="Text" /></li>
                                         <li><img src="https://source.unsplash.com/featured?TechNology" alt="Text" /></li> -->
                                     </ul>
-                                </div><a href="http://tinycomp.net/products/glasscase-jquery-product-image-zoom-plugin/examples.aspx">For More Guide</a>
+                                </div>
                             <!-- </div> -->
                     </div>
 
@@ -144,7 +135,6 @@
                     <div class="sticky-top top-5">
                         <div class="pb-3" data-aos="fade-in">
                             <div class="d-flex align-items-center mb-3">
-                                <p class="small fw-bolder text-uppercase tracking-wider text-muted m-0 me-4">KiiKii</p>
                                 <div class="d-flex justify-content-start align-items-center disable-child-pointer cursor-pointer"
                                 data-pixr-scrollto
                                 data-target=".reviews">
@@ -164,7 +154,7 @@
                                         <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
                                         <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
                                     </div>
-                                </div>        <small class="text-muted d-inline-block ms-2 fs-bolder">(105 reviews)</small>
+                                </div>        
                             </div>
                             </div>
                             
@@ -321,12 +311,12 @@
                                       </div>
                                       <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
                                       <picture class="position-relative overflow-hidden d-block bg-light">
-                                          <img class="w-100 img-fluid position-relative z-index-10" title="" src="/uploads/<%= product.coverimage.filename %>" alt="">
+                                          <img class="w-100 img-fluid position-relative z-index-10" style="height: 350px;" title="" src="/uploads/<%= product.coverimage.filename %>" alt="">
                                       </picture>
                                         
                                   </div>
                                   <div class="card-body px-0">
-                                      <a class="text-decoration-none link-cover" href="/product.html"><%= product.name %></a>
+                                      <a class="text-decoration-none link-cover" href="/productdetails/<%= product._id %>"><%= product.name %></a>
                                               <p class="mt-2 mb-0 small"><s class="text-muted">₹<%= product.baseprice %></s> <span class="text-danger">₹<%= product.price %></span></p>
                                   </div>
                               </div>
@@ -359,38 +349,7 @@
     <!-- / Main Section-->
 
     <!-- Footer -->
-    <footer class="border-top py-5 mt-4  ">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center flex-column flex-lg-row">
-                <div>
-                    <ul class="list-unstyled">
-                        <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="#"><i class="ri-instagram-fill"></i></a></li>
-                        <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="#"><i class="ri-facebook-fill"></i></a></li>
-                        <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="#"><i class="ri-twitter-fill"></i></a></li>
-                        <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="#"><i class="ri-snapchat-fill"></i></a></li>
-                    </ul>
-                </div>
-                <div class="d-flex align-items-center justify-content-end flex-column flex-lg-row">
-                    <p class="small m-0 text-center text-lg-start">&copy; 2023 BassHeads All Rights Reserved.</p>
-                    <ul class="list-unstyled mb-0 ms-lg-4 mt-3 mt-lg-0 d-flex justify-content-end align-items-center">
-                        <li class="bg-light p-2 d-flex align-items-center justify-content-center me-2">
-                            <i class="pi pi-sm pi-paypal"></i></li>
-                        <li class="bg-light p-2 d-flex align-items-center justify-content-center me-2">
-                            <i class="pi pi-sm pi-mastercard"></i></li>
-                        <li class="bg-light p-2 d-flex align-items-center justify-content-center me-2">
-                            <i class="pi pi-sm pi-american-express"></i></li>
-                        <li class="bg-light p-2 d-flex align-items-center justify-content-center"><i
-                                class="pi pi-sm pi-visa"></i>
-                        </li>=
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>    <!-- / Footer-->  
+   
 
     <!-- Theme JS -->
     <!-- Vendor JS -->
@@ -412,7 +371,4 @@
     </script>
        <script src="/javascripts/zoom.js"></script>
 
-</body>
-
-</html>
 <%- include ('userPartials/userFooter')%>

@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="card mb-4">
-                        <header class="card-header">
+                        <!-- <header class="card-header">
                             <div class="row gx-3">
                                 <div class="col-lg-4 col-md-6 me-auto">
                                     <input type="text" placeholder="Search..." class="form-control">
@@ -85,13 +85,13 @@
                                     </select>
                                 </div>
                             </div>
-                        </header> <!-- card-header end// -->
+                        </header> card-header end -->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>SI.No.</th>
                                             <th>Customer name</th>
                                             <th>Deliver TO</th>
                                             <th>Total Price</th>
@@ -101,11 +101,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% orderData.forEach((order)=>{ %>
+                                        <% orderData.forEach((order,index)=>{ %>
                                         <tr>
-                                            <td>452</td>
-                                            <td><b><%= order.username.username %></b></td>
-                                            <td><%= order.addressData.addresses[0].street %><%= order.addressData.addresses[0].district %></td>
+                                            <td><%= index+1%></td>
+                                            <td><b><%= order.address.name %></b></td>
+                                            <td><%= order.address.addresses[0].street %><%= order.address.addresses[0].district %></td>
                                             <td><%= order.grandTotal %></td>
                                             <td> <div class="mb-4">
                                                 
@@ -114,7 +114,7 @@
                                                 
                                                 
                                             </div></td>
-                                            <td><%= order.createdAt %></td>
+                                            <td><%= order.createdAt.toLocaleString() %></td>
                                             <td class="text-end">
                                                 <a href="/admin/orderdetails/<%= order._id %>" class="btn btn-md rounded font-sm">Detail</a>
                                                 <!-- <div class="dropdown">
@@ -133,7 +133,7 @@
                         </div> <!-- card-body end// -->
                     </div> <!-- card end// -->
                 </div>
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="mb-3">Filter by</h5>
@@ -170,8 +170,8 @@
                                 </div>
                             </form>
                         </div>
-                    </div> <!-- card end// -->
-                </div>
+                    </div>
+                </div> -->
             </div>
             <div class="pagination-area mt-15 mb-50">
                 <nav aria-label="Page navigation example">

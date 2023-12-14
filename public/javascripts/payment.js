@@ -87,7 +87,6 @@ function confirmorder() {
             text:'Your order has been placed.',
             icon:'success'
           }).then(()=>{
-            alert("after ")
             sessionStorage.removeItem('updatedValue');
             location.href = '/orderconfirm'
           })
