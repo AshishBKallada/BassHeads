@@ -62,7 +62,6 @@ async function removeBanner(id) {
 
 function changeStatus(id)
 {
-  alert('1')
   const response = fetch('/admin/bannerstatus',{
     method: 'POST',
     headers: {
@@ -72,7 +71,6 @@ function changeStatus(id)
   });
   if(response.ok)
   { 
-    alert('client')
     Swal.fire({
       position: "top-center",
       icon: "success",

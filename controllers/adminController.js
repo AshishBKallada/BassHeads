@@ -342,7 +342,7 @@ let addproduct = async (req, res, next) => {
   console.log(req.body);
   const cat = await category.findById(req.body.category[1]);
   const catDiscount = cat.discount;
-  const price = req.body.price - (req.body.price * req.body.discount / 100) - (req.body.price * catDiscount / 100);
+  const price = Math.floor(req.body.price - (req.body.price * req.body.discount / 100) - (req.body.price * catDiscount / 100));
   console.log(price);
   const images = req.files.images.map((item) => item.filename);
 
@@ -728,13 +728,16 @@ let cancelorder = async (req, res, next) => {
 let showcoupons = async (req, res, next) => {
  
   const couponData = await couponModel.find();
-
+ 
   res.render('page-coupons', { couponData });
 }
 const addcoupon = async (req, res, next) => {
   try {
-    const isCoupon=await couponModel.find({name:req.body.name})
-   
+    const isCoupon=await couponModel.findOne({name:req.body.name})
+   if(isCoupon) {
+        console.log("Coupon already exists");
+    return res.status(201).send();
+   }
     console.log(req.body.expiryDate)
     const data = req.body;
     const insertCoupon = await couponModel.insertMany(data);
@@ -1192,7 +1195,7 @@ let catdiscount = async (req, res, next) => {
 
   const products = await product.find({ category: id });
   products.forEach(product => {
-    product.price = product.price - (product.price * discount / 100);
+    product.price =Math.floor( product.price - (product.price * discount / 100));
     product.save();
   })
 

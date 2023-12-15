@@ -4,6 +4,8 @@ async function createCoupon() {
     const name = document.getElementById('product_name').value;
     const discountx = document.getElementById('discount').value;
     const expiry = document.getElementById('expiryDate').value;
+    const mincartx= document.getElementById('mincart').value;
+    const mincart=parseInt(mincartx);
     const discount = parseInt(discountx);
 
     document.getElementById('nameError').textContent = '';
@@ -12,9 +14,13 @@ async function createCoupon() {
     let isValid = true;
 
     if (name.trim() === '') {
-        document.getElementById('nameError').textContent = 'Please enter the coupon name.';
-        isValid = false;
-    }
+      document.getElementById('nameError').textContent = 'Please enter the coupon name.';
+      isValid = false;
+  } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+      document.getElementById('nameError').textContent = 'Coupon name should only contain letters and spaces.';
+      isValid = false;
+  }
+  
 
     
 
@@ -26,6 +32,10 @@ async function createCoupon() {
         document.getElementById('discountError').textContent = 'Please enter a valid discount.';
         isValid = false;
     }
+    if (!/^[1-9]\d*$/.test(mincart) || isNaN(mincart) || mincart<= 0) {
+      document.getElementById('minError').textContent = 'Please enter a valid minimum amount.';
+      isValid = false;
+  }
 
     if (!isValid) {
         return;
@@ -37,8 +47,12 @@ async function createCoupon() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, discount, expiry }),
+        body: JSON.stringify({ name, discount, expiry,mincart }),
     });
+    if(response.status===201)
+    {
+      document.getElementById('nameError').innerHTML = "coupon already exists";
+    }
 
     if (response.ok) {
         const responseData = await response.json();

@@ -1115,10 +1115,10 @@ let updatepayment = async (req, res, next) => {
   }
 
   const selectedProducts = Cart.products.filter((item) => item.selected);
-
+  const address=await addressModel.findById(req.body.addressId);
   const orderData = {
     user: userId,
-    address: req.body.addressId,
+    address: address,
     products: selectedProducts.map(item => ({ ...item, total: item.quantity * item.price })),
     paymentMethod: req.body.payment,
     grandTotal: req.body.total,

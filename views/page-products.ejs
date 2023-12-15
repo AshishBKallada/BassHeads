@@ -197,13 +197,12 @@
                                         </div>
 
                                         <br>
-                                        <select class="selectpicker" name="active">
+                                        <select class="selectpicker" name="active" id="active">
                                             <option>Published</option>
                                             <option>Unpublished</option>
-                                            
                                         </select>
                                         <span style="color: red;" id="publishError" class="error"></span>
-
+                                        
                                         <br>
                                         <br>
                                     </form>
@@ -473,7 +472,7 @@
     document.getElementById('coverError').innerHTML = '';
     document.getElementById('priceError').innerHTML = '';
     document.getElementById('stockError').innerHTML = '';
-    document.getElementById('publishError').innerHTML = '';
+    // document.getElementById('publishError').innerHTML = '';
 
     // Check product name
     var productName = document.getElementById('productName').value;

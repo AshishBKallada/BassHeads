@@ -1,6 +1,5 @@
 async function returnStatus(returnId,status)
 {
-    alert(status);
     const response=await fetch('/admin/return/returnstatus',{
         method:'POST',
         headers:{
@@ -11,7 +10,6 @@ async function returnStatus(returnId,status)
     })
     if(response.ok)
     {
-        alert('aahda mwonu set');
         
         Swal.fire({
             position: "center",
