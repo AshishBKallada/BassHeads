@@ -1018,7 +1018,6 @@ const resetPasswordMail = async (user, token) => {
 };
 
 const forgotpass = async (req, res, next) => {
-  console.log('2nd call pari')
   try {
     const user = await User.findOne({ _id: req.session.user }, { email: 1 });
 
