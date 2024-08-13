@@ -85,10 +85,10 @@ background-size: cover;">
                     </div> 
                     <div class="form-group">
                       <label class="form-label" for="register-email">Email address</label>
-                      <input name="email" type="email" class="form-control" id="register-email" placeholder="name@email.com">
+                      <input name="email" type="email" class="form-control" id="register-email" placeholder="name@email.com" **data-email-value="">**
                       <div style="color: red;" id="emailError"></div>
-
-                    </div>
+                  </div>
+                  
                     <div class="form-group">
                       <label class="form-label" for="register-password">Password</label>
                       <input name="password"  type="password" class="form-control" id="register-password" placeholder="Enter your password">
@@ -110,9 +110,10 @@ background-size: cover;">
                 <div class="card py-5 px-3">
                   <h5 class="m-0">Mobile phone verification</h5>
                   <span class="mobile-text">
-                    <b>Enter the code we just sent on your phone</b>
-                    <b class="text-color">+91 09899619282</b>
-                  </span>
+                    <b>Enter the code we just sent to your email:</b>
+                    <b class="text-color" id="userEmail">**${emailInput.dataset.emailValue}**</b>
+                </span>
+                
                   <div class="d-flex flex-row mt-5">
                     <input type="text" class="form-control" autofocus name="otp1"/>
                     <input type="text" class="form-control" name="otp2" />
@@ -180,6 +181,10 @@ function isEmailValid(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
     }
+    const emailInput = document.getElementById('register-email');
+    emailInput.addEventListener('input', () => {
+        emailInput.dataset.emailValue = emailInput.value;
+    });
 
     </script>
 
