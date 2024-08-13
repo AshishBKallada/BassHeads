@@ -163,18 +163,19 @@
 </html>
 <script>
     function previewImage() {
-        var input = document.getElementById('banner-img');
-        var preview = document.getElementById('preview-image');
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
+      var input = document.getElementById('banner-img');
+      var preview = document.getElementById('preview-image');
+  
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+  
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+        };
+  
+        reader.readAsDataURL(input.files[0]);
+      }
     }
-</script>
+  </script>
+  
 <%- include('adminPartials/adminFooter')%>
