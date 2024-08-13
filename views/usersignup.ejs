@@ -78,26 +78,26 @@ background-size: cover;">
                     Twitter</a>
                 <span class="text-muted text-center d-block fw-bolder my-4">OR</span> -->
                 <form action="/signupsub" method="POST">
-                    <div class="form-group">
+                  <div class="form-group">
                       <label class="form-label" for="register-fname">User name</label>
                       <input name="name" type="text" class="form-control" id="register-fname" placeholder="Enter your first name">
                       <div style="color: red;" id="nameError"></div>
-                    </div> 
-                    <div class="form-group">
+                  </div> 
+                  <div class="form-group">
                       <label class="form-label" for="register-email">Email address</label>
-                      <input name="email" type="email" class="form-control" id="register-email" placeholder="name@email.com" **data-email-value="">**
+                      <input name="email" type="email" class="form-control" id="register-email" placeholder="name@email.com">
                       <div style="color: red;" id="emailError"></div>
                   </div>
                   
-                    <div class="form-group">
+                  <div class="form-group">
                       <label class="form-label" for="register-password">Password</label>
-                      <input name="password"  type="password" class="form-control" id="register-password" placeholder="Enter your password">
+                      <input name="password" type="password" class="form-control" id="register-password" placeholder="Enter your password">
                       <div style="color: red;" id="passwordError"></div>
-
-                    </div>
-          
-                    <button type="submit" id="signupButton" onclick="validateSignup()" class="btn btn-dark d-block w-100 my-4 signupButton">Sign Up</button>
-                  </form>
+                  </div>
+              
+                  <button type="submit" id="signupButton" class="btn btn-dark d-block w-100 my-4">Sign Up</button>
+              </form>
+              
                   <p class="d-block text-center text-muted">Already registered? <a class="text-muted" href="/login">Login here.</a></p>
             </div>
 
@@ -181,10 +181,11 @@ function isEmailValid(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
     }
+    document.getElementById('signupButton').addEventListener('click', function(event) {
+    validateSignup();
     const emailInput = document.getElementById('register-email');
-    emailInput.addEventListener('input', () => {
-        emailInput.dataset.emailValue = emailInput.value;
-    });
+    document.getElementById('userEmail').textContent = emailInput.value;
+});
 
     </script>
 
